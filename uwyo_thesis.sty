@@ -1,0 +1,938 @@
+\NeedsTeXFormat{LaTeX2e}[1998/06/01]
+\def\filedate{July 16}
+\def\fileyear{2019}
+\def\fileversion{3.9}
+\ProvidesPackage{uwyo_thesis}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ver 3.8 updated to allow proper formatting of an external committee member
+%%% ver 3.9 fixed page numbering issues if user deletes the dedication page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% File: uwyo_thesis.sty
+%%% =============================================
+%%% This file defines macros used for preparing theses and
+%%% dissertations for the University of Wyoming using LaTeX.
+%%% There is no guarantee that it will meet *all* requirements of the
+%%% university forever in the future, but it should come very close and is
+%%% regularly updated when formatting requirements change.
+%%% Only very small manual adjustments should be needed to meet requirements.
+%%% In most cases this file should never need modification; all changes
+%%% should be done via the uwyo_0.tex file.
+%%%
+%%% This file is typically distributed with a group of skeletal
+%%% LaTeX files that can form the structure of any thesis or
+%%% dissertation and provide an example of how to use this package.
+%%%
+%%% Author: Cameron H. G. Wright, ECE Dept, University of Wyoming
+%%% Copyright (c) 2003-2016 for all files in this distribution.
+%%%
+%%% Heritage:
+%%% Minor portions based upon an early University of Texas style file
+%%% "utthesis" by Dinesh Das (original (c) 1995). Used with permission.
+%%% This file is free and can be modified or distributed as long as
+%%% you meet the following conditions:
+%%%
+%%% (1) This copyright notice is kept intact on all modified copies.
+%%% (2) If you modify this file, you MUST NOT use the original file name.
+%%%
+%%%
+%%% Usage:
+%%% ======
+%%%
+%%% This file must be loaded as a package in the main document preamble:
+%%%
+%%% \documentclass[...]{book}
+%%% \usepackage{uwyo_thesis}
+%%%
+%%%
+%%% Template files are provided as uwyo_0.tex, uwyo_1.tex, uwyo_2.tex,
+%%% etc., (available from the same place you obtained this file) that
+%%% load the package and set up the basic structure of the document.
+%%%
+%%% Command Names:
+%%% ==============
+%%%
+%%% Most command names used in this file that are used to format the
+%%% thesis begin with "thesis" (e.g., \thesisauthorLname).  All of these
+%%% commands definitions can be changed in the ``main'' template file
+%%% called ``uwyo_0.tex'' by ussing using \renewcommand, e.g.,
+%%%
+%%% \renewcommand{\thesisauthorLname}{Last}
+%%% \renewcommand{\thesisauthorFMname}{First M.}
+%%%
+%%% in the main tex document after loading the package.
+%%%
+%%% The following is a list of all thesis-related variables used together
+%%% with their default values:
+%%%
+%%% \thesisauthorLname %% Last name of the author; defaults to "Student".
+%%% \thesisauthorFMname %% First and middle initial (or middle name) of the
+%%%                     %% author; defaults to "Iman A.".
+%%% \thesismonth     %% Month of graduation; defaults to "May".
+%%% \thesisyear      %% Year of graduation; defaults to "2010".
+%%% \thesistitle     %% Full title of dissertation; defaults to "An Obfuscated
+                     %%  Analysis and Exposition of Really Cool
+%%%                  %%  Things That I Understand and You Do Not"
+%%% \thesisDeptName  %% Academic department or program name; defaults to
+%%%                  %% "Electrical and Computer Engineering"
+%%% \thesisCollegeName
+                     %% College in which the students "home" Dept resides; defaults to
+%%%                  %% "Engineering and Applied Science"
+%%% \thesisDeptHead  %% Dept head's name; defaults to "John P. Jones"
+%%%                  %% also used for Program Head name for interdisciplinary programs
+%%% \thesisDegreeArea  %% area of your degree; defaults to "Electrical Engineering"
+%%% \thesisChairTitle%% Title of committee chair defaults to "Chairman"
+%%% \thesisDeanTitle %% Title of Graduate School Dean; defaults to "Dean"
+%%%                  %% Useful for times when it should be "Interim Dean"
+%%% \thesisDeptHeadTitle  %% Title of Dept Head; defaults to "Head"
+%%%                  %% Useful for times when it should be "Interim Head"
+%%% \thesisDeanName  %% Name of Dean of the college; defaults to the current dean of CEAS
+%%%                  %% Useful if the Dean changes in the future or if your home dept
+%%%                  %% is in another college
+%%% \thesistitletypesize
+%%%                  %% Typesize used to typeset \thesistitle; defaults
+%%%                  %% to \Large.
+%%% \thesisauthorpreviousdegrees
+%%%                  %% Previous degrees of author; defaults to "B.S.E.E."
+%%% \thesisauthoraddress
+%%%                  %% Permanent address of author; defaults to "100 Mountain Ave.,
+%%%                  %% Laramie, WY USA" used only if you include a Vita section.
+%%% \thesiscopyrightholder
+%%%                  %% Name of copyright holder; defaults to thesis author.
+%%% \thesistypist    %% Name of thesis typist; defaults to "the author". Used only on
+%%%                  %% Vita page if included.
+%%% \thesistype      %% Type of thesis; defaults to "dissertation". Change by
+%%%                  %% using \mastersthesis or \phdthesis in document preamble.
+%%% \thesistypetypesize
+%%%                  %% Typesize used to typeset \thesistype; defaults to
+%%%                  %% \large.
+%%% \thesisdegree    %% Degree for which thesis is submitted; defaults to
+%%%                  %% "Doctor of Philosophy" or "Master of Science".
+%%% \thesisdegreetypesize
+%%%                  %% Typesize used to typeset \thesisdegree; defaults to
+%%%                  %% \large.
+%%% \thesisdegreeabbreviation
+%%%                  %% Abbreviation of \thesisdegree; defaults to "Ph.D." or "M.S.".
+%%% \thesisvitahead  %% Title of the vita page; defaults to "Vita".
+%%% \thesisvitaheadtypesize
+%%%                  %% Typesize used to typeset \thesisvitahead; unused.
+%%% \thesisacknowledgmenthead
+%%%                  %% Title of the acknowledgments page; defaults to
+%%%                  %% "Acknowledgments".
+%%% \thesisacknowledgmentheadtypesize
+%%%                  %% Typesize used to typeset \thesisacknowledgmenthead;
+%%%                  %% not currently used.
+%%% \thesisacknowledgmentsigname
+%%%                  %% Signature on the acknowledgments page; defaults to
+%%%                  %% thesis author.
+%%% \thesisacknowledgmentsignametypesize
+%%%                  %% Typesize used to typeset \thesisacknowledgmentsigname;
+%%%                  %% defaults to \large.
+%%% \thesisacknowledgmentsigplace
+%%%                  %% Address used on the acknowledgments page; defaults
+%%%                  %% to "The University of Wyoming \\ \thesismonth
+%%%                  %% \thesisyear".
+%%% \thesisstudent   %% Name of author with previous degrees; defaults to
+%%%                  %% "\thesisauthorFMname \thesisauthorLname, \thesisauthorpreviousdegrees".
+%%% \thesisstudenttypesize
+%%%                  %% Typesize used to typeset \thesisstudent; defaults
+%%%                  %% to \large.
+%%% \thesisdedication%% Person (or thing) to whom (or what) the thesis is dedicated; defaults to
+%%%                  %% "To myself". :-)
+%%% \bibname         %% Title of reference section; defaults to "References".
+%%%                  %% Note this is a standard LaTeX definition command
+%%%
+%%% Most of the default values will satisfy the university's
+%%% requirements. However, at a minimum, the user SHOULD redefine the
+%%% following commands in the template file uwyo_0.tex:
+%%%
+%%% \thesisauthorLname
+%%% \thesisauthorFMname
+%%% \thesismonth
+%%% \thesisyear
+%%% \thesisDefenseDate
+%%% \thesistitle
+%%% \thesisDeptName
+%%% \thesisDeptHead
+%%% \thesisDegreeArea
+%%% \thesisauthorpreviousdegrees
+%%% \thesisdedication
+%%%
+%%% **Plus: fill in your committee member names in the space indicated in 
+%%% the uwyo_0.tex file.
+%%%
+%%% In addition to the above variables, the following commands are
+%%% used in uwyo_0.tex to generate the various sections of the thesis:
+%%%
+%%% \thesisCommitteePage %% Generates the committee approval page.
+%%%
+%%% \thesistitlepage %% Generates the title page.
+%%%
+%%% \thesiscopyrightpage  %% Generates the copyright page.
+%%%
+%%% \thesisdedicationpage  %% Generates the dedication page.
+%%%
+%%%
+%%% There are also a few environments to generate paragraph-like text:
+%%%
+%%% thesisacknowledgments  %% Text of acknowledgments.
+%%%
+%%% thesisabstract   %% Text of abstract.
+%%%
+%%% thesisauthorvita %% Text of author's vita.
+%%%
+%%% Bells and Whistles:
+%%% ===================
+%%%
+%%% The following commands are provided purely for helping you out a bit.
+%%% They should be used in the document preamble (before \begin{document}).
+%%%
+%%% \thesisdraft     %% Prints a timestamp at the top of each page.  This
+%%%                  %% must be invoked in the document preamble (before
+%%%                  %% \begin{document}).
+%%% \leftchapter, \centerchapter, \rightchapter
+%%%                  %% These commands generate left-justified, centered,
+%%%                  %% and right-justified chapter headings, respectively.
+%%% \singlespace, \oneandhalfspace, \doublespace
+%%%                  %% These define the line spacing to single-space,
+%%%                  %% one-and-one-half space, and double-space
+%%%                  %% respectively.  Usually the minimum spacing
+%%%                  %% required by your committee is \oneandhalfspace,
+%%%                  %% but \singlespace is useful, e.g., when using
+%%%                  %% \thesisdraft.
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\typeout{************************************************************}
+\typeout{** University of Wyoming Thesis/Diss Style File             }
+\typeout{**           Version \fileversion; \filedate, \fileyear       }
+\typeout{** Written by Cameron H. G. Wright                          }
+\typeout{**            Dept. of Electrical and Computer Engineering  }
+\typeout{**            The University of Wyoming                     }
+\typeout{************************************************************}
+
+%% load some of the commonly needed packages here
+\usepackage{graphicx}  % allows use of graphic figures
+\usepackage{subfig} % new package for combining figures into one; replaces subfigure
+\usepackage{amsmath}  % loads extra math symbols
+\usepackage{amssymb}  % also loads amsfonts
+\usepackage{float}  % permits new floating environments
+\usepackage{url}  % handle URLs, directories, e-mail addresses
+\usepackage{cite}  % make sequential citations look nice
+\usepackage{listings}  % for pretty printing of program code
+\usepackage{color}
+%\usepackage{soul} % defines underlining with line breaks for abstract: no longer needed
+
+
+%%% set up listings package for program listings %%%%%%%%%%%%%
+%%% note syntax changes needed from ver 0.21 to ver 1.0 of listings.sty
+\lstloadlanguages{C++,Matlab}%
+\definecolor{lightgray}{rgb}{0.9,0.9,0.9} % from the color package
+\lstset{numbers=left,%  new command to get line numbers
+        numberstyle=\tiny,% new version of labelstyle
+        stepnumber=2,% new version of labelstep
+        numbersep=5pt,% new version of labelsep
+        commentstyle=\ttfamily,%
+        identifierstyle=\ttfamily,%
+        stringstyle=\ttfamily,%
+        backgroundcolor=\color{lightgray},% using new syntax for color
+        breaklines=true,%
+        postbreak={[+]},% this works with all fonts in listings
+        language=C++}% default language
+\def\lstlistlistingname{List of Computer Programs}
+\def\mylistoflistings{
+    \lstlistoflistings
+    \addcontentsline{toc}{chapter}{\lstlistlistingname}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% You can create some handy shortcuts in this fashion here or in uwyo_0.tex
+\newcommand{\ml}{MATLAB}  % shortcut for MATLAB
+\newcommand{\pc}{\path}  % use special typeface for computer commands
+
+%%%
+%%% Set up page layout parameters. Assumes lettersize (8.5" x 11") paper.
+%%% Sets the required 1.5-inch binding-side margin
+%%%
+\setlength{\textheight}{8.8in}  % this looks nice and adheres to 2010 ProQuest margins
+\setlength{\oddsidemargin}{0.0in} % added to a 1in margin
+\setlength{\evensidemargin}{0.0in} % added to a 1in margin
+\setlength{\textwidth}{6.50in}
+\setlength{\topmargin}{0.0in} % added to a default 1in margin
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\parindent}{2.0em}
+%%%
+%%% Take care of a few other odds and ends
+\renewcommand{\topfraction}{0.85} % allow larger figures on a page
+%%%
+%%% Set up default values. Don't change them here--go to uwyo_0.tex
+%%%
+\newcommand{\@universityname}{University of Wyoming}
+\newcommand{\thesisDeptName}{Department of Electrical and Computer Engineering}
+\newcommand{\thesisCollegeName}{College of Engineering and Applied Science}
+\newcommand{\thesisDeptHead}{John E. McInroy}
+\newcommand{\thesisDeptHeadTitle}{Head}
+\newcommand{\thesisDeanName}{Michael V. Pishko}
+\newcommand{\thesisDeanTitle}{Dean}  % might possbbly be Interim Dean, Dean, etc.
+\newcommand{\thesisDegreeArea}{Electrical Engineering}
+\newcommand{\thesisauthorLname}{Student}
+\newcommand{\thesisauthorFMname}{Iman A.}
+\newcommand{\thesisauthor}{\thesisauthorFMname\ \thesisauthorLname}
+\newcommand{\thesismonth}{May}
+\newcommand{\thesisyear}{2025}
+\newcommand{\thesisDefenseDate}{May 6, 2025}
+\newcommand{\thesistitle}{An Obfuscated Analysis and Exposition of Really Cool
+   Things That Only I Understand and You Do Not}
+%\newcommand{\abstitle}{\ul{An Obfuscated Analysis and Exposition of Really Cool
+%   Things That I Understand and You Do Not}}  % underlined version no longer needed
+\newcommand{\thesistitletypesize}{\Large}
+\newcommand{\thesisauthorpreviousdegrees}{B.S.E.E.}
+\newcommand{\thesisauthoraddress}{100 Mountain Ave.,\\Laramie, WY USA}
+\newcommand{\thesiscopyrightholder}{\thesisauthor}
+\newcommand{\thesistypist}{the author}
+\newcommand{\thesistype}{dissertation}
+\newcommand{\thesistypetypesize}{\large}
+\newcommand{\thesistypesize}{\large}
+\newcommand{\thesisdegree}{Doctor of Philosophy}
+\newcommand{\thesisdegreetypesize}{\large}
+\newcommand{\thesisdegreeabbreviation}{Ph.D.}
+\newcommand{\thesisvitahead}{Vita}
+\newcommand{\thesisvitaheadtypesize}{\Large}
+\newcommand{\thesisacknowledgmenthead}{Acknowledgments}
+\newcommand{\thesisacknowledgmentheadtypesize}{\Large}
+\newcommand{\thesisacknowledgmentsigname}{\thesisauthor}
+\newcommand{\thesisacknowledgmentsignametypesize}{\large}
+\newcommand{\thesisacknowledgmentsigplace}%
+    {{\slshape
+       \renewcommand{\arraystretch}{1.0}
+       \begin{tabular}{l}
+         \@universityname \\
+         \thesismonth\ \thesisyear
+       \end{tabular}}}
+\newcommand{\thesisstudent}{\thesisauthor, \thesisauthorpreviousdegrees}
+\newcommand{\thesisstudenttypesize}{\large}
+\newcommand{\thesisChairTitle}{Chairperson}
+\newcommand{\thesisOutTitle}{Outside Member}
+\newcommand{\thesisdedication}{I dedicate this to my parents,
+who had the good fortune to have me in their lives, and to my
+dog Spot who helped proof-read this document.\ldots}
+
+
+\renewcommand{\bibname}{References}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%%
+%%% Command for masters theses.
+%%% The command \phdthesis is provided for symmetry only.
+%%%
+\newcommand{\mastersthesis}{
+    \renewcommand{\thesistype}{thesis}
+    \renewcommand{\thesisdegree}{Master of Science}
+    \renewcommand{\thesisdegreeabbreviation}{M.S.}
+    }
+\newcommand{\phdthesis}{}
+
+%%%
+%%% Set up other commands.
+%%%
+\newcommand{\@defaultbaselinestretch}{1.5}
+\newcommand{\@base}[1]{\renewcommand{\baselinestretch}{#1}}
+\newcommand{\singlespace}{\renewcommand{\@defaultbaselinestretch}{1.1}}
+\newcommand{\oneandhalfspace}{\renewcommand{\@defaultbaselinestretch}{1.5}}
+\newcommand{\doublespace}{\renewcommand{\@defaultbaselinestretch}{1.7}}
+\newcommand{\@thesistitle}{\textbf{\thesistitletypesize \thesistitle}}
+\newcommand{\@thesistype}{\textbf{\thesistypetypesize \thesistype}}
+\newcommand{\@thesisdegree}{\textbf{\thesisdegreetypesize \thesisdegree}}
+\newcommand{\@thesisdegreeabbreviation}{\thesisdegreeabbreviation}
+\newcommand{\@thesisvitahead}{\thesisvitahead}
+\newcommand{\@thesisacknowledgmenthead}%
+    {\thesisacknowledgmenthead}
+\newcommand{\@thesisacknowledgmentsigname}%
+    {\textsc{\thesisacknowledgmentsignametypesize \thesisacknowledgmentsigname}}
+\newcommand{\@thesisacknowledgmentsigplace}{\thesisacknowledgmentsigplace}
+\newcommand{\@thesisstudent}{\textbf{\thesisstudenttypesize \thesisstudent}}
+
+%%%
+%%% Uncomment two lines below to indent the first paragraph after a sectioning command.
+%%%
+% \let\@afterindentfalse\@afterindenttrue
+% \@afterindenttrue
+
+%%%
+%%% Set up default page numbering and line spacing.
+%%%
+\pagestyle{empty} % start document with no page numbers
+\newcommand{\@textpagenumbering}{arabic}
+\newcommand{\@preamblepagenumbering}{roman}
+\newcommand{\@textpagestyle}{plain}
+\newcommand{\@preamblepagestyle}{plain}
+\pagenumbering{\@preamblepagenumbering}
+\@base{\@defaultbaselinestretch}
+
+\newcommand{\@chaptertype}{\chaptername}
+\newcommand{\@appendix}{0}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Here is some code for the committee page.
+%%%  It figures out how many members you specified
+%%%  and lists the correct names.
+%%%  Signature lines are not needed anymore.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%% commands to define the committe names
+%
+%% chairperson
+\newcommand{\thesisCommitteeChair}[1]%
+  {\ifx\empty#1{\empty}\else\gdef\@committeeChair{#1}\fi}
+%
+%% other committee members; should never have more than 6! 
+%
+\newcommand{\thesisFirstMember}[1]%
+  {\ifx\empty#1{\empty}\else\gdef\@firstMember{#1}\fi}
+\newcommand{\thesisSecondMember}[1]%
+  {\ifx\empty#1{\empty}\else\gdef\@secondMember{#1}\fi}
+\newcommand{\thesisThirdMember}[1]%
+  {\ifx\empty#1{\empty}\else\gdef\@thirdMember{#1}\fi}
+\newcommand{\thesisFourthMember}[1]%
+  {\ifx\empty#1{\empty}\else\gdef\@fourthMember{#1}\fi}
+\newcommand{\thesisFifthMember}[1]%
+  {\ifx\empty#1{\empty}\else\gdef\@fifthMember{#1}\fi}
+\newcommand{\thesisSixthMember}[1]%
+  {\ifx\empty#1{\empty}\else\gdef\@sixthMember{#1}\fi}
+  % set name of External member
+\newcommand{\thesisExternalMember}[1]%
+  {\ifx\empty#1{\empty}\else\gdef\@externalMember{#1}\fi}
+\newcommand{\thesisExternalTitle}[1]%
+  {\ifx\empty#1{\empty}\else\gdef\@externalTitle{#1}\fi}
+  
+%%
+%% set default values
+%% these will be changed as needed in uwyo_0.tex
+%%
+ \thesisCommitteeChair{Claude E. Shannon}
+ \thesisFirstMember{Robert E. Heinlein}  % the outside member, UW faculty
+ \thesisSecondMember{Homer S. Simpson}
+ \thesisThirdMember{}
+ \thesisFourthMember{}
+ \thesisFifthMember{}
+ \thesisSixthMember{}
+ \thesisExternalMember{}   % an external member, from another university, normally stays blank
+ \thesisExternalTitle{}   % title should normally be empty like this
+
+%
+%% signature line length
+\newlength{\signature@width}
+\setlength{\signature@width}{6in} % big enough for any name
+
+
+% generates the committee member name with proper spacing
+\newcommand{\signature}[1]{%
+  \ifx\empty#1{}\empty%
+  \else%
+     \mbox{~}\\
+%     \parbox{\signature@width}{#1 \hfill}\\  % left justified in the minipage
+     \parbox{\signature@width}{\hfill #1}\\   % right justified in the minipage
+     \mbox{~}\\
+  \fi%
+}
+
+%% create the committee page
+\newcommand{\thesisCommitteePage}{%
+  \begin{spacing}{1.0}
+  \begin{flushleft}
+    \noindent To the \@universityname :
+
+    \hspace{2.0em}The members of the Committee approve the \thesistype\ of
+    \thesisauthor\ presented on \thesisDefenseDate .\\
+
+
+      \vspace{1in}
+    \mbox{} \hfill \begin{minipage}{\signature@width}
+
+       \signature{\@committeeChair, \thesisChairTitle}
+       \signature{\@firstMember, \thesisOutTitle}
+       %\signature{\@firstMember}
+       \signature{\@secondMember}
+       \signature{\@thirdMember}
+       \signature{\@fourthMember}
+       \signature{\@fifthMember}
+       \signature{\@sixthMember}
+       \signature{\@externalMember, \@externalTitle}
+       
+    \end{minipage}
+    \vfill \strut
+    APPROVED: \\
+    \bigskip
+    \mbox{~}\\
+    \thesisDeptHead, \thesisDeptHeadTitle, \thesisDeptName \\
+    \bigskip
+    \mbox{~}\\
+    \thesisDeanName, \thesisDeanTitle, \thesisCollegeName
+  \end{flushleft}
+  \end{spacing}
+  \newpage
+}
+%%%%% end of committee page command %%%%%%%%%%%%%%%%%
+%%%% End of code associated with committee page  %%%%
+
+%%%
+%%% Environment to generate abstract page.
+%%%
+
+\newenvironment{thesisabstract}
+    { \if@openright\cleardoublepage\else\clearpage\fi
+     \thispagestyle{plain}
+      \pagenumbering{arabic}
+     \newlength{\myName} % width of your name
+     \newlength{\hangBox} % remaining space after your name
+     \settowidth{\myName}{\thesisauthorLname , \thesisauthorFMname ,\ }%
+     \setlength{\hangBox}{\textwidth}%
+     \addtolength{\hangBox}{-1.0\myName}%
+     \begin{spacing}{1.2} % increase a bit to accommodate the underline
+     \noindent \thesisauthorLname , \thesisauthorFMname ,
+     \parbox[t]{\hangBox}{
+       \thesistitle,
+       \thesisdegreeabbreviation , \thesisDeptName ,
+       \thesismonth , \thesisyear .}
+       \end{spacing}
+       \bigskip\bigskip
+    }
+    {\newpage
+    \if@openright{\mbox{}\newpage}\else\fi
+    \thispagestyle{empty} \pagenumbering{roman} }
+
+
+%%%
+%%% Command to generate title page.
+%%%
+\newcommand{\thesistitlepage}{
+    \thispagestyle{empty}
+    \begin{center}
+        \begin{spacing}{1.5}
+          \MakeUppercase{\@thesistitle} \\[8mm]
+        \end{spacing}
+      \vfill
+      \begin{spacing}{1}
+      by \\[4mm]
+      \@thesisstudent \\
+      \vfill
+      A \thesistype\  submitted to the\\
+      \thesisDeptName\\
+      and the\\
+      \@universityname \\
+      in partial fulfillment of the requirements \\
+      for the degree of \\[5ex]
+      \MakeUppercase{\thesisdegree} \\
+      in \\
+      \MakeUppercase{\thesisDegreeArea} \\
+      \vfill
+      Laramie, Wyoming \\
+      \thesismonth\  \thesisyear
+    \end{spacing}
+    \end{center}
+   \newpage }
+
+%%%
+%%% Command to generate copyright page.
+%%%
+\newcommand{\thesiscopyrightpage}{
+    \thispagestyle{plain}
+       \pagestyle{plain}
+    \strut \vfill
+    \begin{center}
+      \begin{spacing}{2}
+      Copyright \copyright\ \thesisyear\\ by \\ \thesiscopyrightholder
+      \end{spacing}
+    \end{center}
+    \vfill \strut
+    \newpage }
+
+%%%
+%%% Command to generate dedication page.
+%%%
+\newcommand{\thesisdedicationpage}{
+    \thispagestyle{plain}
+    \pagestyle{plain}
+    \strut \vfill
+    \begin{spacing}{\@defaultbaselinestretch}
+    \begin{center}
+      \thesisdedication
+    \end{center}
+    \end{spacing}
+    \vfill \strut
+    \newpage }
+
+%%%
+%%% Environment to generate acknowledgments page.
+%%%
+\newenvironment{thesisacknowledgments}
+    {%\doublespace\small\normalsize
+     \chapter*{\@thesisacknowledgmenthead
+         \@mkboth{\uppercase{\@thesisacknowledgmenthead}}
+                 {\uppercase{\@thesisacknowledgmenthead}}}
+     \addcontentsline{toc}{chapter}{\@thesisacknowledgmenthead}
+     \begin{spacing}{\@defaultbaselinestretch}}
+    {\end{spacing} \par \vspace{20mm}
+     \raggedleft \@thesisacknowledgmentsigname \\[10mm]
+     \raggedright \@thesisacknowledgmentsigplace \newpage }
+
+%%%
+%%% Environment to generate vita page.
+%%%
+\newenvironment{thesisauthorvita}
+    {\clearpage
+     \chapter*{\@thesisvitahead
+         \@mkboth{\uppercase{\@thesisvitahead}}
+                 {\uppercase{\@thesisvitahead}}}
+    \addcontentsline{toc}{chapter}{\@thesisvitahead}
+    \begin{spacing}{\@defaultbaselinestretch}}
+    {\end{spacing} \par \vspace{20mm}
+     \noindent Permanent Address:
+       \begin{minipage}[t]{90mm}
+         \thesisauthoraddress
+       \end{minipage}
+     \par \vspace{15mm}
+     \noindent This \lowercase\expandafter{\thesistype} was
+       typeset with \LaTeXe\footnote{\LaTeXe{} is an extension of \LaTeX.
+       \LaTeX{} is a collection of macros for \TeX.  \TeX{} is a
+       trademark of the American Mathematical Society.  The macros used in
+       formatting this \lowercase\expandafter{\thesistype} were written
+       by Cameron Wright, Department of Electrical and Computer Engineering,
+       The University of Wyoming.
+    } by \thesistypist.}
+
+\newcommand{\@chapteralignment}{\centering} % default format
+
+\renewcommand{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi
+   \ifnum\@appendix=1
+     \renewcommand{\@chaptertype}{\appendixname}
+   \else
+     \renewcommand{\@chaptertype}{\chaptername}
+   \fi
+   \thispagestyle{plain}%
+   \global\@topnum\z@
+   \@afterindentfalse
+   \secdef\@chapter\@schapter
+   }
+\renewcommand\appendix{\par
+  \setcounter{chapter}{0}%
+  \setcounter{section}{0}%
+  \renewcommand{\@chapapp}{\appendixname}%
+  \renewcommand{\thechapter}{\Alph{chapter}}
+  \renewcommand{\@appendix}{1}}
+
+%%%
+%%% Define chapter heading placement commands.
+%%%
+\newcommand{\leftchapter}{
+    \renewcommand{\@chapteralignment}{\raggedright}}
+\newcommand{\centerchapter}{
+    \renewcommand{\@chapteralignment}{\centering}}
+\newcommand{\rightchapter}{
+    \renewcommand{\@chapteralignment}{\raggedleft}}
+
+%%%
+%%% Command from report.cls, (c) LaTeX3 Project.
+%%%
+\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+                      \refstepcounter{chapter}%
+                      \typeout{\@chapapp\space\thechapter.}%
+                      \addcontentsline{toc}{chapter}%
+                          {\@chaptertype{} \protect\numberline{\thechapter}#1}%
+                    \else
+                      \addcontentsline{toc}{chapter}{\@chaptertype{} #1}
+                    \fi
+                    \ifnum\value{chapter}=1
+                      \ifnum\@appendix=0
+                        \pagestyle{\@textpagestyle}
+                        \pagenumbering{\@textpagenumbering}
+                      \fi
+                    \fi
+                    \chaptermark{#1}%
+                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+                    \if@twocolumn
+                      \@topnewpage[\@makechapterhead{#2}]%
+                    \else
+                      \@makechapterhead{#2}%
+                      \@afterheading
+                    \fi
+                    }
+
+%%%
+%%% Command from report.cls, (c) LaTeX3 Project.
+%%%
+\def\@makechapterhead#1{%
+  \vspace*{50\p@}%
+  {\parindent \z@ \@chapteralignment \reset@font
+    \ifnum \c@secnumdepth >\m@ne
+      \huge\bfseries \@chapapp{} \thechapter
+      \par
+      \vskip 20\p@
+    \fi
+    \Huge \bfseries #1\par
+    \nobreak
+    \vskip 40\p@
+  }}
+\def\@makeschapterhead#1{%
+  \vspace*{50\p@}%
+  {\parindent \z@ \@chapteralignment
+    \reset@font
+    \Huge \bfseries  #1\par
+    \nobreak
+    \vskip 40\p@
+  }}
+
+
+%
+%%%
+%%% Command from report.cls, (c) LaTeX3 Project.
+%%%
+\renewcommand\listoftables{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\listtablename
+      \@mkboth{\uppercase{\listtablename}}{\uppercase{\listtablename}}}%
+    \addcontentsline{toc}{chapter}{\listtablename}
+    \@starttoc{lot}%
+    \if@restonecol\twocolumn\fi
+    }
+\renewcommand\listoffigures{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\listfigurename
+      \@mkboth{\uppercase{\listfigurename}}%
+              {\uppercase{\listfigurename}}}%
+    \addcontentsline{toc}{chapter}{\listfigurename}
+    \@starttoc{lof}%
+    \if@restonecol\twocolumn\fi
+    }
+\renewcommand\tableofcontents{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\contentsname
+        \@mkboth{\uppercase{\contentsname}}{\uppercase{\contentsname}}}%
+    \@starttoc{toc}%
+    \if@restonecol\twocolumn\fi
+    }
+
+%%%
+%%% Command to print draft version of the thesis.
+%%%
+\newcommand{\thesisdraft}{
+    \setlength{\topmargin}{-0.25in}
+    \setlength{\headheight}{0.2in}
+    \setlength{\headsep}{0.25in}
+    \renewcommand{\@textpagestyle}{myheadings}
+    \def\ps@myheadings{%
+     \let\@oddfoot\@empty\let\@evenfoot\@empty
+     \def\@oddhead{\textsl{Draft of \timestamp}\hfil\thepage}%
+     \def\@evenhead{\textsl{Draft of \timestamp}\hfil\thepage}%
+     \let\@mkboth\@gobbletwo
+     \let\chaptermark\@gobble
+     \let\sectionmark\@gobble}
+    }
+
+%%%
+%%% Code to compute current timestamp.
+%%%
+\newcount\hour \newcount\minute
+\hour=\time  \divide \hour by 60
+\minute=\time
+\loop \ifnum \minute > 59 \advance \minute by -60 \repeat
+\def\thesistime{\ifnum \hour<13 \number\hour:%
+                      \ifnum \minute<10 0\fi
+                      \number\minute
+                      \ifnum \hour<12 \ am\else \ pm\fi
+         \else \advance \hour by -12 \number\hour:%
+                      \ifnum \minute<10 0\fi
+                      \number\minute \ pm\fi}
+
+\def\thesisdate{\ifcase\month\or
+January\or February\or March\or April\or May\or June\or
+July\or August\or September\or October\or November\or December\fi
+\space\number\day, \number\year}
+
+\newcount\dow
+\newcount\leap
+\newcount\x
+\newcount\y
+
+%leap = year + (month - 14)/12
+\leap=\month \advance\leap by -14 \divide\leap by 12
+  \advance\leap by \year
+
+%dow = (13 * (month + 10 - (month + 10)/13*12) - 1)/5
+\dow=\month \advance\dow by 10
+  \y=\dow \divide\y by 13 \multiply\y by 12
+  \advance\dow by -\y \multiply\dow by 13 \advance\dow by -1 \divide\dow by 5
+
+%dow += day + 77 + 5 * (leap % 100)/4
+\advance\dow by \day \advance\dow by 77
+  \x=\leap \y=\x \divide\y by 100 \multiply\y by 100 \advance\x by -\y
+  \multiply\x by 5 \divide\x by 4 \advance\dow by \x
+
+%dow += leap / 400
+\x=\leap \divide\x by 400 \advance\dow by \x
+
+%dow -= leap / 100 * 2;
+%dow = (dow % 7)
+\x=\leap \divide\x by 100 \multiply\x by 2 \advance\dow by -\x
+  \x=\dow \divide\x by 7 \multiply\x by 7 \advance\dow by -\x
+
+\def\thesisdayofweek{\ifcase\dow
+Sunday\or Monday\or Tuesday\or
+Wednesday\or Thursday\or Friday\or Saturday\fi}
+
+\def\timestamp{\thesistime, \thesisdayofweek, \thesisdate}
+
+%%%
+%%% Commands for spacing.  Some parts from spacing.sty by Stephen Page.
+%%%
+\ifx\undefined\selectfont
+\def\@setsize#1#2#3#4{\@nomath#1
+   \let\@currsize#1\baselineskip
+   #2\baselineskip\baselinestretch\baselineskip
+   \parskip\baselinestretch\parskip
+   \setbox\strutbox\hbox{\vrule height.7\baselineskip
+      depth.3\baselineskip width\z@}
+   \normalbaselineskip\baselineskip#3#4}
+\else
+\def\@newbaseline{%
+    \ifx\undefined\setnew@baselineskip
+      \baselineskip\f@baselineskip\relax
+    \else
+      \setnew@baselineskip
+    \fi
+    \baselineskip\baselinestretch\baselineskip
+    \setbox\strutbox\hbox{\vrule\@height.7\baselineskip
+    \@depth.3\baselineskip \@width\z@}%
+    \normalbaselineskip\baselineskip}
+\fi
+%%%
+%% Redefine the macro used for floats (including figures and tables)
+%% so that single spacing is used for captions.
+%% (Note \def\figure{\@float{figure}set single spacing} doesn't work
+%%  because figure has an optional argument)
+%%
+%% This code was copied directly from latex.ltx, but with the
+%% \baselinestretch command added to it.
+%
+\def\@xfloat #1[#2]{%
+  \@nodocument
+  \def \@captype {#1}%
+   \def \@fps {#2}%
+   \@onelevel@sanitize \@fps
+   \def \reserved@b {!}%
+   \ifx \reserved@b \@fps
+     \@fpsadddefault
+   \else
+     \ifx \@fps \@empty
+       \@fpsadddefault
+     \fi
+   \fi
+   \ifhmode
+     \@bsphack
+     \@floatpenalty -\@Mii
+   \else
+     \@floatpenalty-\@Miii
+   \fi
+  \ifinner
+     \@parmoderr\@floatpenalty\z@
+  \else
+    \@next\@currbox\@freelist
+      {%
+       \@tempcnta \sixt@@n
+       \expandafter \@tfor \expandafter \reserved@a
+         \expandafter :\expandafter =\@fps
+         \do
+          {%
+           \if \reserved@a h%
+             \ifodd \@tempcnta
+             \else
+               \advance \@tempcnta \@ne
+             \fi
+           \fi
+           \if \reserved@a t%
+             \@setfpsbit \tw@
+           \fi
+           \if \reserved@a b%
+             \@setfpsbit 4%
+           \fi
+           \if \reserved@a p%
+             \@setfpsbit 8%
+           \fi
+           \if \reserved@a !%
+             \ifnum \@tempcnta>15
+               \advance\@tempcnta -\sixt@@n\relax
+             \fi
+           \fi
+           }%
+       \@tempcntb \csname ftype@\@captype \endcsname
+       \multiply \@tempcntb \@xxxii
+       \advance \@tempcnta \@tempcntb
+       \global \count\@currbox \@tempcnta
+       }%
+    \@fltovf
+  \fi
+  \global \setbox\@currbox
+    \color@vbox
+      \normalcolor
+      \vbox \bgroup
+        \def\baselinestretch{1}  % this is what does the trick
+        \hsize\columnwidth
+        \@parboxrestore
+        \@floatboxreset
+}
+
+%%%
+%% set footnotes to single spacing
+%%%
+\long\def\@footnotetext#1{\insert\footins{\def\baselinestretch{1}\footnotesize
+    \interlinepenalty\interfootnotelinepenalty
+    \splittopskip\footnotesep
+    \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
+    \hsize\columnwidth \@parboxrestore
+   \edef\@currentlabel{\csname p@footnote\endcsname\@thefnmark}\@makefntext
+    {\rule{\z@}{\footnotesep}\ignorespaces
+      #1\strut}}}
+
+%%%
+%%% Spacing macro "stolen" from MIT.
+%%%
+\def\spacing#1{\par%
+ \begingroup
+ \def\baselinestretch{#1}
+ \ifx\undefined\selectfont
+ \ifx\@currsize\normalsize\@normalsize\else\@currsize\fi
+ \else
+ \@newbaseline
+ \fi}
+\def\endspacing{\par
+ \vskip \parskip
+ \vskip \baselineskip
+ \endgroup
+ \vskip -\parskip
+ \vskip -\baselineskip}
+
+%%%%%%%%%% last few things %%%%%%%%%%%%%%%%%%
+\vfuzz2pt % Don't report over-full v-boxes if over-edge is small
+\hfuzz2pt % Don't report over-full h-boxes if over-edge is small
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\typeout{End of uwyo_thesis.sty style file\space
+\filedate, \fileyear\space version\space\fileversion}
+\endinput
+%%
+%% End of file `uwyo_thesis.sty'.

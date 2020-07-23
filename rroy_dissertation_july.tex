@@ -1,0 +1,237 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This document is part of the set of template files
+%% for the uwyo_thesis style. This is your main file that
+%% helps compile the entire document; each individual chapter
+%% should be a separate file that is brought in using the
+%% "\include{}" commands shown below.
+%%
+%% Step one: rename this file to something specific to you, such as
+%% "Smith_thesis.tex" so your eventaul PDF file will end up having the
+%% name "Smith_thesis.pdf."  You can also rename any individual chapter
+%% files; if you do, be sure to make the appropriate change to the
+%% "\include{}" commands below.
+%%
+%% Important: only *this* file should be compiled by LaTeX.
+%% The individual chapter files are *not* standalone files.
+%%
+%% For interdisciplinary programs such as Neuroscience, see the
+%% special section below
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\documentclass[12pt,oneside,openany]{book}  % single-sided printing
+\documentclass[12pt]{book}                  % double-sided printing
+%% First line above assumes single-sided printing.
+%% For double-sided (duplex) printing use the second line instead.
+%% The duplex printing version is best for your final version of the document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{uwyo_thesis} % the main style file
+%%% Many common packages are already loaded by the style file
+%%% Add any others below
+%\usepackage{??}
+
+
+%%% Note about your title:
+%%% Due to limitations in the UW Banner system, you may want to limit your
+%%% thesis/dissertation titles to the following:
+%%%  Masters thesis titles:  214 characters including spaces
+%%%  Ph.D. dissertation titles: 208 characters including spaces
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% set these values for your particular document and
+%%% uncomment the lines below as needed
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\mastersthesis % uncomment this if a Masters thesis; comment out if PhD
+\thesisdraft  % uncomment to put time/date/draft stamp in header
+\renewcommand{\thesisauthorLname}{Roy}
+\renewcommand{\thesisauthorFMname}{Rajib}
+\renewcommand{\thesismonth}{August}
+\renewcommand{\thesisyear}{2020}
+%\renewcommand{\thesisDefenseDate}{the exact day you defend your thesis}
+%%% NOTE: you must enter the same title for both \thesistitle and \abstitle below
+% Do not use all upper case! That will be done for you where needed.
+%\renewcommand{\thesistitle}{your document title}
+%\renewcommand{\abstitle}{\ul{your document title}}
+% Must be exactly the same as \thesistitle
+\renewcommand{\thesisDeptName}{Mechanical Engineering}
+\renewcommand{\thesisDeptHead}{Carl P. Frick}
+\renewcommand{\thesisCollegeName}{College of Engineering and Applied Science}
+\renewcommand{\thesisDeanName}{Cameron H.G. Wright}
+\renewcommand{\thesisDegreeArea}{Mechanical Engineering}
+\renewcommand{\thesisauthorpreviousdegrees}{M.S.M.E.}
+%\renewcommand{\lstlistlistingname}{my program listings} % if you want an alternate name for the list
+%\renewcommand{\thesisDeptHeadTitle}{Interim Head} % if you're between Dept Heads
+%\renewcommand{\thesisDeanTitle}{Interim Dean} % if you're between Deans
+
+%\renewcommand{\thesisdedication}{your dedication} % no length limit, but don't get carried away!
+
+%%%%%%%% Interdisciplinary programs section %%%%%%%%%%%%%%%%%%%
+%% You need to define things a bit differently:
+%% \renewcommand{\thesisDeptName}{the name of your interdisciplnary program}
+%% \renewcommand{\thesisDeptHead}{name of your interdisciplinary program chair}
+%% \renewcommand{\thesisDeptHeadTitle}{Program Chair}
+%% \renewcommand{\thesisCollegeName}{University of Wyoming}
+%% \renewcommand{\thesisDeanName}{name of the UW Provost}
+%% \renewcommand{\thesisDeanTitle}{Provost}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%% Required: insert your committee member names inside the curly braces
+%%% then uncomment the needed lines
+\thesisCommitteeChair{Michael Stoellinger}  % this is your advisor
+\thesisFirstMember{Long Lee}  % this should be the member *outside* your department
+\thesisSecondMember{Erica L. Belmont}
+\thesisThirdMember{Jonathan W. Naughton}
+\thesisFourthMember{Dimitri Mavriplis}
+% \thesisFifthMember{}
+% \thesisSixthMember{}
+% \thesisExternalMember{Carol Danvers}  % a member from another university, not normally used
+% only uncomment the line below if you actually have an external member
+% \thesisExternalTitle{External Member}  % Not normally used
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+% Print initial frontmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Generate the committee page.
+%%%  If you want to save a page, you can comment
+%%%  this out for early drafts as it isn't needed
+%%%  until you're ready for the final version.
+\thesisCommitteePage
+%%%
+
+%%% the abstract page
+\begin{thesisabstract}
+This is where you write your abstract.  Here are the guidelines on
+the abstract according to UW and the
+ProQuest/UMI organization (the company that archives theses and dissertations from
+universities worldwide).
+
+
+For a masters thesis, the abstract should ideally be around 60 to 80
+words in length.  If you must, you can exceed this length, but the
+abstract cannot exceed one page.  Any abstract text that exceeds
+150 words will be truncated to the first 150 words (and any non-textual content will
+be removed) by ProQuest for the online databases, although your full abstract will
+be preserved in the complete electronic (PDF) version of your thesis.
+
+
+For a Ph.D.\ dissertation, the abstract should ideally be no longer than 350 words. If
+the abstract exceeds 350 words, it will be truncated to the first 350 words (and any
+non-textual content will be removed) by ProQuest for the online databases, although your
+full abstract will be preserved in the electronic (PDF) version of your dissertation. In
+any case, the dissertation abstract cannot exceed two pages (one page is preferred).
+
+New paragraph. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance.
+
+New paragraph. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance.
+
+New paragraph. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance. This line is meant to check the margins and text
+appearance.
+
+
+
+\end{thesisabstract}
+
+ \thesistitlepage        % print title page
+ \thesiscopyrightpage    % print the copyright page
+ % comment out line below to eliminate the optional dedication page, if you really can't think of anyone!
+ \thesisdedicationpage   % print the dedication page
+
+% Generate and print the lists
+ \tableofcontents        % table of contents
+ \listoffigures          % List of Figures
+ \listoftables           % List of Tables
+ % comment out line below if you have no program listings!!!
+ \mylistoflistings      % List of program listings
+
+
+%% acknowledgments section: don't forget to thank your committee
+%% members, any funding sources/grants, even your Mom and Dad if you want
+\begin{thesisacknowledgments}
+This is where you write any paragraphs you want to show up on the Acknowledgments page.
+Traditionally, you use this space to thank your committee members for their help, any
+funding sources such as an NSF grant that helped you, and so on.  This section is up to
+you (no page or word limit, but exercise restraint) as long as it is written in a
+professional manner. Be careful you don't end up with a messy page break, such as when
+the automatic insertion of your name, the university name, and the month and date at the
+end of this environment is the only thing that shows up on the next page.  Write more or
+less text here to fix it!
+
+New paragraph. This line is meant to check the margins and text appearance. This line is
+meant to check the margins and text appearance. This line is meant to check the margins
+and text appearance. This line is meant to check the margins and text appearance. This
+line is meant to check the margins and text appearance. This line is meant to check the
+margins and text appearance. This line is meant to check the margins and text appearance.
+
+\end{thesisacknowledgments}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Now this is where your various chapters come in
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Abbreviations is an optional entry, placed either at the front or at the end of the document
+%% Uncomment the line below if you want abbreviations to be part of the front matter, before Chapter 1
+\input{uwyo_abbr_front} % 
+
+% Bring in the chapter files -- \input is more efficient than \include
+\input{chap1_intro} % chapter 1
+\input{chap2_algorithm} % chapter 2
+% add other chapters here
+
+
+% change formatting for any appendices
+% comment this out if you have no appendices
+
+\appendix
+\input{uwyo_A} % appendix A
+\input{uwyo_B} % appendix B
+
+%% Uncomment the line below if you want abbreviations to be an appendix, at the end of the document
+%\input{uwyo_C_abbr} % appendix C
+
+
+% Generate the References section using BibTeX. Optionally you
+% can code this by hand (argh!)
+\bibliographystyle{ieeetran} % IEEE standard citation style
+\addcontentsline{toc}{chapter}{\bibname} % make reference section show up in TOC
+
+\begin{spacing}{1.0} % sets line spacing of references
+% reads in the sample BibTex file supplied; change to your bib file name
+\bibliography{sample}
+\end{spacing}
+
+
+%\begin{thesisauthorvita}
+%This is where you put your vita if needed. Not usually used at UW.
+%\end{thesisauthorvita}
+
+
+%% all done!
+\end{document}

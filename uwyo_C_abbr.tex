@@ -1,0 +1,400 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This file can be used to generate a list of symbols, abbreviations, etc.
+%% as an appendix.
+%%   For use with theses or dissertations using uwyo_thesis.sty
+%%
+%%   Version: 1.00
+%%   Last modified: 1 May 2013
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Abbreviations, Acronyms, and Symbols}
+\label{Abbreviations}  % for you to be able to refer to this appendix in the main text
+
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+{ % begin special environment for abbreviations  -- modify only with great care!
+
+ \setlength{\parindent}{0pt}
+
+%%%%% commands just for this file %%%%%%%%%%%%%%%%%%%%%%%
+ \newcommand{\abbrltr}[1]{% command for letter section
+   \bigskip
+   \framebox{\textbf{#1}}
+   \medskip
+ }
+ \newlength{\abbrwidth}
+ \newlength{\abbrdef}
+ \setlength{\abbrwidth}{0.6in}  % adjust for longest abbreviation
+ \setlength{\abbrdef}{\textwidth}
+ \addtolength{\abbrdef}{-\abbrwidth}
+ \newcommand{\abbr}[2]{% command for an entry
+   \begin{tabular}{p{\abbrwidth}p{\abbrdef}}
+     \textbf{#1} & {#2}
+   \end{tabular}
+
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% start appendix text %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+This is a partial list of abbreviations, acronyms, and symbols used in the
+text, provided in the hope that it will be helpful to some readers.
+
+\abbrltr{Symbols}
+
+\abbr{$(\:)$}{used for a continuous function.}
+
+\abbr{$[\:\:]$}{used for a discrete function.}
+
+\abbrltr{Greek Letters}
+
+\abbr{$\alpha$}{feedback coefficient for simple IIR filters, such as those used for a
+type of echo generation for guitar special effects.}
+
+\abbr{$\lambda$}{wavelength.}
+
+\abbr{$\pi$}{ratio of a circle circumference to diameter,
+3.1415926535897932\ldots}
+
+\abbr{$\tau$}{time constant.}
+
+\abbr{$\omega$}{radian frequency.}
+
+\abbrltr{A}
+
+\abbr{$a$}{filter coefficient associated with an output term, $y$.
+When used in a transfer function, the $a$ coefficients are
+associated with the denominator of the transfer function.}
+
+\abbr{$A$}{vector or array containing all of the $a$ terms.}
+
+
+\abbr{ADC}{analog-to-digital converter.}
+
+\abbr{AIC}{analog interface circuit (see codec).}
+
+\abbr{AGC}{automatic gain control.}
+
+\abbr{AM}{amplitude modulation.}
+
+\abbr{ARM}{Advanced RISC Machine, a 32-bit reduced instruction set computer (RISC)
+instruction set architecture (ISA) developed by ARM Holdings.}
+
+\abbr{AWGN}{additive white Gaussian noise.}
+
+
+\abbrltr{B}
+
+\abbr{$b$}{filter coefficient associated with an input term, $x$.
+When used in a transfer function, the $b$ coefficients are
+associated with the numerator of the transfer function.}
+
+\abbr{$B$}{vector or array containing all of the $b$ terms.}
+
+\abbr{$BW$}{bandwidth of a bandpass signal.}
+
+\abbr{BP}{bandpass.}
+
+\abbr{BPF}{bandpass filter.}
+
+\abbr{BPSK}{binary phase shift keying.}
+
+\abbrltr{C}
+
+\abbr{C}{value of capacitance.}
+
+\abbr{CD-ROM}{Compact disk read-only memory.}
+
+\abbr{CISC}{complex instruction set computer.}
+
+\abbr{codec}{coder-decoder.  An integrated circuit that contains
+both an ADC and a DAC.}
+
+\abbr{CPU}{central processing unit.}
+
+\abbrltr{D}
+
+\abbr{DAC}{digital-to-analog converter.}
+
+\abbr{D.C.}{direct current (0 Hz).}
+
+\abbr{DDS}{direct digital synthesizer or direct digital
+synthesis.}
+
+\abbr{DF-I}{direct form I.}
+
+\abbr{DF-II}{direct form II.}
+
+\abbr{DFT}{discrete Fourier transform.}
+
+\abbr{DMA}{direct memory access.}
+
+\abbr{DSK}{DSP starter kit.}
+
+\abbr{DSP}{digital signal processing or digital signal processor.}
+
+\abbr{DTFT}{discrete-time Fourier transform.}
+
+\abbr{DTMF}{dual-tone, multiple-frequency signals as defined by telephone companies.}
+
+\abbrltr{E}
+
+\abbr{EDMA}{enhanced direct memory access.}
+
+\abbrltr{F}
+
+\abbr{FCC}{Federal Communications Commission.}
+
+\abbr{FIR}{finite impulse response.}
+
+\abbr{FFT}{fast Fourier transform.}
+
+\abbr{FT}{Fourier transform.}
+
+\abbr{$\mathcal{F}$}{Fourier transform.}
+
+\abbr{$\mathcal{F}^{-1}$}{inverse Fourier transform.}
+
+\abbr{$f_h$}{highest or maximum frequency that is present in a
+signal.}
+
+\abbr{$F_s$}{sample frequency (samples/second) = $1/T_s$.}
+
+\abbrltr{G}
+
+\abbr{GPP}{general purpose processor.}
+
+\abbr{GPU}{graphics processing unit.}
+
+\abbrltr{H}
+
+\abbr{$H(e^{j\omega})$}{discrete-time frequency response.}
+
+\abbr{$H(j\omega)$}{continuous-time frequency response.}
+
+\abbr{$h[n]$}{discrete-time impulse response or unit sample
+response.}
+
+\abbr{$h[t]$}{continuous-time impulse response.}
+
+\abbr{$H(s)$}{continuous-time transfer or system function.}
+
+\abbr{$H(z)$}{discrete-time transfer or system function.}
+
+\abbr{HDTV}{high-definition television.}
+
+\abbr{HP}{highpass.}
+
+\abbr{HPF}{highpass filter.}
+
+\abbr{HPI}{host port interface.}
+
+\abbr{Hz}{hertz (cycles per second).}
+
+\abbrltr{I}
+
+\abbr{IF}{intermediate frequency.}
+
+\abbr{IFFT}{inverse fast Fourier transform.}
+
+\abbr{IIR}{infinite impulse response.}
+
+\abbr{ISA}{instruction set architecture.}
+
+\abbr{ISR}{interrupt service routine.}
+
+\abbrltr{J}
+
+\abbr{$j$}{$\sqrt{-1}$; identifies the imaginary part of a complex number. Some authors
+use $i$ instead of $j$.}
+
+\abbr{JTAG}{Joint Test Action Group, commonly used as the name of a debugging interface
+for printed circuit boards and IC chips. Formalized as IEEE Std 1149.1 in 1990.}
+
+%\abbrltr{K}
+
+%\abbr{$k$}{dummy index of summation used in the convolution sum.}
+
+\abbrltr{L}
+
+\abbr{$\mathcal{L}$}{Laplace transform.}
+
+\abbr{$\mathcal{L}^{-1}$}{inverse Laplace transform.}
+
+\abbr{L}{value of inductance.}
+
+\abbr{LFSR}{linear feedback shift register.}
+
+\abbr{LP}{lowpass.}
+
+\abbr{LPF}{lowpass filter.}
+
+\abbr{LSB}{lower sideband, also used for least significant bit.}
+
+
+\abbrltr{M}
+
+\abbr{M}{the number of bands in a graphic equalizer.}
+
+\abbr{MA}{moving average.}
+
+\abbr{McASP}{multi-channel audio serial port.}
+
+\abbr{McBSP}{multi-channel buffer serial port.}
+
+\abbr{ML}{maximum likelihood.}
+
+\abbrltr{N}
+
+\abbr{$n$}{index or sample number.}
+
+\abbr{$N$}{often used as filter order; in other contexts, it is used for the length of a
+sequence, or for the length of an FFT.}
+
+\abbr{NCO}{numerically controlled oscillator.}
+
+
+\abbrltr{O}
+
+\abbr{OMAP}{Open Multimedia Application Platform, a family of proprietary multi-core
+system on chips (SoCs) by Texas Instruments.}
+
+
+\abbrltr{P}
+
+\abbr{PC}{personal computer.}
+
+\abbr{PCM}{pulse code modulation.}
+
+\abbr{PLL}{phase-locked loop.}
+
+\abbr{PN}{pseudonoise.}
+
+\abbr{PSK}{phase shift keying.}
+
+
+\abbrltr{Q}
+
+\abbr{$Q$}{quality factor.  $Q$ = bandwidth of a BP filter divided
+by its center frequency.  The higher the value of $Q$, the more
+selective the BP filter is.}
+
+\abbr{QAM}{quadrature amplitude modulation.}
+
+\abbr{QPSK}{quadrature phase shift keying.}
+
+\abbrltr{R}
+
+\abbr{$r$}{magnitude of a pole.  This is a measure of how far the
+pole is from the origin.}
+
+\abbr{R}{value of resistance.}
+
+\abbr{RC}{resistor-capacitor.}
+
+\abbr{RISC}{reduced instruction set computer.}
+
+\abbr{RF}{radio frequency.}
+
+\abbrltr{S}
+
+\abbr{$s$}{the Laplace transform independent variable, $s = \sigma
++ j\omega$.}
+
+\abbr{SoC}{system on chip.}
+
+\abbrltr{T}
+
+\abbr{$\tau$}{a dummy variable often used in convolution.}
+
+\abbr{$t$}{time.}
+
+\abbr{$T$}{period of a signal or function.}
+
+\abbr{TED}{timing error detector.}
+
+\abbr{$T_s$}{sample period = $1/F_s$.}
+
+\abbr{TI}{Texas Instruments.}
+
+\abbrltr{U}
+
+\abbr{$u[n]$}{discrete-time unit step function.}
+
+\abbr{$u(t)$}{unit step function.}
+
+\abbr{U.S.}{United States (of America).}
+
+\abbr{USB}{upper sideband; also used for Universal Serial Bus.}
+
+\abbrltr{V}
+
+\abbr{$V$}{voltage in Volts.}
+
+\abbr{$V_{in}$}{input voltage.}
+
+\abbr{$V_{out}$}{output voltage.}
+
+\abbr{VLIW}{very long instruction word; this is a type of
+architecture for DSPs.}
+
+\abbrltr{W}
+
+\abbr{winDSK}{original Windows-based program for the C31 DSK,
+created by Mike Morrow.}
+
+\abbr{winDSK6}{Windows-based program, the follow-on to winDSK, for the C6x DSK series. It
+was created by Mike Morrow.}
+
+\abbr{winDSK8}{Windows-based program, the follow-on to winDSK6, for the OMAP-L138
+multi-core board). It was created by Mike Morrow.}
+
+\abbrltr{X}
+
+\abbr{$X(j\omega)$}{result of the Fourier transform
+$\mathcal{F}\{x(t)\}$; it shows the frequency content of $x(t)$.}
+
+\abbr{$x[n]$}{a discrete-time input signal.}
+
+\abbr{$x(t)$}{a continuous-time input signal.}
+
+%\newpage
+
+\abbrltr{Y}
+
+\abbr{$Y(j\omega)$}{result of the Fourier transform
+$\mathcal{F}\{y(t)\}$; it shows the frequency content of $y(t)$.}
+
+\abbr{$y[n]$}{a discrete-time output signal.}
+
+\abbr{$y(t)$}{a continuous-time output signal.}
+
+\abbrltr{Z}
+
+\abbr{$z$}{the independent transform variable for discrete-time signals and systems.}
+
+\abbr{$z^{-1}$}{a delay of 1 sample.}
+
+\abbr{$Z_c$}{impedance of a capacitor.}
+
+\abbr{$\mathcal{Z}$}{$z$-transform.}
+
+\abbr{$\mathcal{Z}^{-1}$}{inverse $z$-transform.}
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % %
+} % end environment for zero \parindent  -- do not remove this curly brace
+
+%\mycleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%% end appendix text %%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+
