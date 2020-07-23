@@ -1,0 +1,15 @@
+rootDir=/home/rroy/OpenFOAM/rroy-6/run/
+
+meshDirs= [3DTGV/inviscid/,	3DTGV_unstructured/uniformRightAnglePrism/inviscid/,	3DTGV_nonUniform/inviscid/,	]
+
+turbModels= [inviscid/,	inviscid/,	inviscid/,	]
+
+solvers= [spaeceFoamCNTGV,	spaeceFoamCNTGV,	spaeceFoamCNTGV,	]
+
+caseNames= [,	,	midPoint,	]
+
+meshs= [65x65x65,	65x65x65,	65x65x65,	]
+
+caseLabels = [Cube,	Prism,	Hex,	]
+
+plotSaveLoc=/home/rroy/OpenFOAM/rroy-6/run//3DTGV/inviscid//spaeceFoamCNTGV/plots/65x65x65/3Mesh/

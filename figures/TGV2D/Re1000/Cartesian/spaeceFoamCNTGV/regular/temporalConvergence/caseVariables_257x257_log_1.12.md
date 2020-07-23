@@ -1,0 +1,36 @@
+rootDir: /home/rroy/OpenFOAM/rroy-6/run/2DTGV_Cartesian/
+Re: Re1000
+solver: spaeceFoamCNTGV
+solverSetting: regular/
+
+mesh: 257x257
+#### CFLs:
+CFL0.10	CFL0.20	CFL0.40	CFL0.80	
+
+#### temporalResolution:
+0.003	0.005	0.010	0.020	
+
+### errorNorms (before subtraction): 
+8.051078e-08	1.140119e-07	3.849081e-05	7.697892e-05	7.695096e-05	1.088231e-04	
+8.229265e-08	1.165289e-07	3.970639e-05	7.940998e-05	7.938115e-05	1.122599e-04	
+8.581943e-08	1.215051e-07	4.207866e-05	8.415432e-05	8.412379e-05	1.189669e-04	
+9.272088e-08	1.312043e-07	4.660054e-05	9.319772e-05	9.316395e-05	1.317513e-04	
+
+## refTime: 1.12
+
+### refErrorNorms: 
+7.943583e-08	1.124923e-07	3.775176e-05	7.550087e-05	7.547344e-05	1.067337e-04	
+
+### errorNorms - refErrorNorms: 
+1.074946e-09	1.519594e-09	7.390528e-07	1.478049e-06	1.477517e-06	2.089485e-06	
+2.856815e-09	4.036672e-09	1.954632e-06	3.909112e-06	3.907706e-06	5.526225e-06	
+6.383599e-09	9.012878e-09	4.326898e-06	8.653449e-06	8.650349e-06	1.223321e-05	
+1.328505e-08	1.871202e-08	8.848782e-06	1.769685e-05	1.769051e-05	2.501768e-05	
+
+velocity2ndErrorFitCoeff: 1.204
+pressure2ndErrorFitCoeff: 1.189
+pGrad2ndErrorFitCoeff:    1.189
+velocityInfErrorFitCoeff: 1.203
+pressureInfErrorFitCoeff: 1.189
+pGradInfErrorFitCoeff:    1.189
+

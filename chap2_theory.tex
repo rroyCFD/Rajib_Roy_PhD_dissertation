@@ -1,0 +1,383 @@
+% This file is for chapter 2
+
+\chapter{Theoretical Background}
+
+
+\section{Introduction}
+\label{sec:intro}
+In this study, we address the solution of transient incompressible flows while minimizing artificial dissipation, particularly in Large Eddy Simulation (LES) of turbulent flows. In the case of an inviscid flow, i.e. in absence of viscous dissipation, the kinetic energy (KE) shall be conserved. And for viscous flow, the KE decay rate shall match with the molecular and turbulence dissipation rate. The discrete incompressible flow solution doesn't directly enforce KE conservation, rather it depends on the discretization schemes applied in the mass and momentum conservation equations.
+
+The diffusion term in the momentum conservation equation is usually discretized with a central difference scheme. The advection term is often discretized with an upwind-blended scheme which is stable due to added artificial dissipation, thus inaccurate. On the other hand, the central-difference schemes do not add any non-physical dissipation, are accurate however, scheme stability isn't guaranteed. Reconciling accuracy and stability has always been a great challenge, particularly for transient, high Reynolds number turbulence flows. The presence of non-physical dissipation interferes with the subtle balance between advective transport and diffusive dissipation, which mostly affects small scales turbulence motion \cite{verstappen2003}. Hence, careful selection of discretization scheme is necessary to ensure KE conservation \cite{perot2000, mahesh2003,sanderse2013}.
+
+Arakawa et al.\cite{arakawa1966, arakawa1977} in their pioneering work demonstrated that, in hydrostatic systems, discretization methods for KE and enstropy conservation provide non-linear stability bound to the solution (also see \cite{sadourny1975}). Morinishi et al. \cite{morinishi1998} introduced a fourth-order accurate KE conservative scheme for structured-uniform meshes, but lost accuracy in non-uniform meshes. Vasilev \cite{vasilyev2000} developed a mapping technique to generalize the Morinishi schemes for application in all mesh types. However, the scheme either conserved momentum or kinetic energy; it didn't conserve both. Verstappen and Veldman \cite{verstappen2003} proposed to utilize the symmetry property constraint of the discrete operators to guide the spatial discretization schemes for KE conservation. For inviscid flow, they showed that a skew-symmetric advection operator and a collocated gradient operator formulated as the negative transpose of the divergence operator ensures net KE contribution from each term is zero. In viscous flow, the dissipation operator shall be a symmetric, negative-definite operator to ensure KE is non-increasing. These operators retain the symmetry property regardless of the underlying mesh type and in the case of structured uniform mesh, these operators become identical to those proposed by Morinishi et al. \cite{morinishi1998}.
+
+
+In LES models, application advection regularization methods has the potential benefit to eliminate un-physical energy accumulation at near-cutoff, high-frequency modes. Many traditional regularization methods apply artificial dissipation, which defeats the purpose of using KE conservative schemes (see Leray model\cite{leray1934}, Navier-Stokes-alpha models\cite{holm1998, montgomery2002, marsden2003} and scale-selective discretization approach \cite{vuorinen2012}). Explicit filtering of the advection term as regularization are also used \cite{lund2003, gullbrand2003, bose2010, bose2010a, singh2012}, which require reformulation of LES models and beyond the scope of this study.
+
+Add the approach of Bull and Jameson;
+
+ Verstappen \cite{verstappen2008} proposed an advection regularization method using the discrete Laplace operator, where the regularized advection term retained its' skew-symmetry property and doesn't affect KE conservation. Following their work, we have developed an alternative and compact regularization formulation which is elaborated Sec. \ref{sec:advReg}.
+
+The rest of the paper is organized as follows. Sec. \ref{sec:mathModel} derives the discrete spatial operators and the symmetry constraints necessary to maintain KE conservation. In Sec. \ref{sec:spaeceAlg}, a non-iterative, projection like algorithm for collocated mesh is proposed to advance an incompressible flow in time.  Rhie-Chow correction to eliminate checkerboard pattern is discussed in Sec. \ref{sec: Rhie-Chow}. KE conservative regularization and associated differential filter are detailed in Sec. \ref{sec:advReg} and \ref{sec:diffFilter} respectively. The algorithm verification and validation is covered in Sec. \ref{sec:VnV}, where KE conservation in inviscid flow (Sec. \ref{sec:inviscidKE}), order-of-convergence (Sec. \ref{sec:orderOfCon}), minimizing artificial dissipation (Sec. \ref{sec:minimizeArtificialDissipation}) and damping non-physical high-frequency modes (Sec. \ref{sec:dampHFModes}) are detailed for viscous (laminar/turbulent) flows. The Sec. \ref{sec:results} illustrates the algorithm performance in LES of 3D Taylor-Green vortex of $Re = 5\times 10^3$ (Sec. \ref{sec:3DTGV}), a periodic channel flow at $Re_\tau = 590$ (Sec. \ref{sec:channel590}) and hybrid RANS-LES of a periodic channel.
+
+%
+
+\section{Mathematical model}
+\label{sec:mathModel}
+
+
+\subsection{Governing equations}
+The Navier-Stokes equation for an incompressible flow is discretized as 
+\begin{subequations}
+\begin{align}
+\begin{split}
+\textit{Mass conservation: } & \ddx {u_i}{i} = 0,
+\end{split} \\
+\begin{split}
+\textit{Momentum conservation: } & \ddt {u_i} +\ddx {(u_i \, u_j)}{j} = -\ddx {(p^*/\rho_0)} {i} + \ddx {(\tau_{ij}/\rho_0)} {j},
+\end{split}
+\end{align}
+\label{eqn:incomFlow}
+\end{subequations}
+where $u$ denotes velocity, $p^*$ denotes pressure and $\rho_0$ denotes constant density. Let's introduce a LES filter $\mathbf{G}$ with filter size $\Delta_f$, such that 
+\begin{equation}
+\mathbf{G}_{\Delta_f}(u) = \av{u}, \quad u^{\prime} = u - \av{u},
+\end{equation}
+where the filtered velocity $\av{u}$ contains all resolved scales larger than the $\Delta_f$ and the residual velocity $u^{\prime}$ contains modeled scales smaller than $\Delta_f$. Assuming the filter operation commutes with the differential operators, the governing equations for LES are
+\begin{subequations}
+\begin{align}
+\begin{split}
+\ddx {\overline{u_i}}{i} & = 0,
+\end{split} \\
+\begin{split}
+ \ddt {\overline{u_i}} + \ddx {(\overline{u_i} \, \overline{u_j} )}{j} & = -\ddx {\overline{p}}{i} + \ddxj \left( \tau_{ij}^{visc} + \tau_{ij}^{sfs} \right),
+\end{split}
+\end{align}
+\label{eqn:LES}
+\end{subequations}
+where $\overline{p} = (\overline{p^*}/\rho_0 + k)$ is the modified-filtered pressure, $k$ is turbulence kinetic energy, and $\tau_{ij}^{visc}$ and $\tau_{ij}^{sfs}$ are the viscous and sub-filter stress respectively. When the $\tau_{ij}^{sfs}$ is estimated using a Boussinesq eddy viscosity $ \nu_t$ based model, the LES momentum equation becomes 
+\begin{equation}
+\begin{split}
+\ddt {\overline{u_i}} + \ddx {(\overline{u_i} \, \overline{u_j}) }{j}
+ = 
+ -\ddx {\overline{p}}{i} 
+ + \ddxj \left[ \nu_{eff} 
+ \left( 
+ \ddx {\overline{u_i}}{j} 
+ + \ddx {\overline{u_j}}{i} 
+ - 2 \ddx {\overline{u_k}}{k} \delta_{ij} 
+ \right) 
+ \right], 
+\end{split} 
+\label{eqn:eddyVisc}
+\end{equation}
+where $\nu$ is the kinematic viscosity and $\nu_{eff} = (\nu + \nu_t) $ denoted the total viscosity. The discrete differential equations \eqref{eqn:LES} and \eqref{eqn:eddyVisc}, when integrated over an arbitrary finite volume, the integral form of the equations are
+\begin{subequations}
+\begin{align}
+\begin{split}
+\sumFV {\av{u}_i^f} \areaVec{i} & = 0
+\end{split} \\
+\begin{split}
+V_{c} \Ddt {\av{u}_i^c} 
++ \sumFV ({\av{u}_j^f} \areaVec{j}) \, {\av{u}_i^f} 
+& = 
+- V_{c} \nabla \overline{p}
+\\
++ \sumFV &\left[ 
+ \nu_{eff} \left(
+ \ddx {\av{u}_i^f}{j} 
+ + \ddx {\av{u}_j^f}{i} 
+ - 2 \ddx {\av{u_k}^f}{k} \delta_{ij} 
+ \right) 
+ \right] \areaVec{j},
+\end{split}
+\end{align}
+\label{eqn:LES-FVM}
+\end{subequations}
+where $V_{c}$ is the volume of the control-volume, $\areaVec{}$ is the face area vector. Following the work of Trias et al. \cite{trias2014}, for all control volumes in the domain(with $n$ number of control volumes and $m$ number of faces), the linear system of equations can be written in the form of discrete temporal and spatial operators
+\begin{subequations}
+\begin{align}
+\begin{split}
+\mathbf{M} \avb{u}_f = \mathbf{0}^c\
+\label{eqn:massCons}
+\end{split}
+\\
+\begin{split}
+\mathbf{T}\avb{u}_c 
++ \mathbf{A}( \avb{u}_f ) {\avb{u}_c} 
++ \mathbf{V} \mathbf{G}_c \avb{p}_c
+- \mathbf{D} {\avb{u}_c} = \mathbf{0}^c,
+\label{eqn:momentumCons}
+\end{split}
+\end{align}
+\label{eqn:discreteOperators}
+\end{subequations}
+where $\avb{p}_c= (p_1, p_2, p_3, ...., p_n)^T \in \mathbb{R}^n$ and $\avb{u}_c \in \mathbb{R}^{3n}$ are the cell-centered (collocated) pressure and velocity fields respectively. Similarly, $\avb{u}_f \in \mathbb{R}^m$ is the face-normal (staggered) velocity field, is related with the collocated velocity field $\avb{u}_c$ via a linear shift transformation (interpolation) $\shiftCS \in \mathbb{R}^{(m \times 3n)} $
+\begin{align}
+\avb{u}_f = (\shiftCS \avb{u}_c) \cdot \mathbf{\hat{n}},
+\label{eqn:shiftCS}
+\end{align}
+where $\mathbf{\hat{n}} \in \mathbb{R}^m$ is the face-normal unit vector. The reciprocal shift operator (reconstruction) $\shiftSC \in \mathbb{R}^{(3n \times m)}$ to transform staggered velocity $\avb{u}_f$ to collocated velocity $\avb{u}_c$ is
+\begin{align}
+\begin{split}
+\avb{u}_c &= \shiftSC (\avb{u}_f \mathbf{\hat{n}}),
+\\
+\shiftSC^{(3n \times m)} \shiftCS^{(m \times 3n)} &= \mathbf{I}^{(3n \times 3n)},
+\end{split}
+\label{eqn:shiftSC}
+\end{align}
+where $\mathbf{I}^{(3n \times 3n)}$ is an identity matrix, underscoring the conservation property of the shift operators (detailed in Sec \ref{sec:shiftOp}). In a 3D velocity field, the block diagonal matrices $ \mathbf{T} \in \mathbb{R}^{(3n \times 3n)}$, $\mathbf{A}(\avb{u}_f) \in \mathbb{R}^{(3n \times 3n)}$, $\mathbf{D} \in \mathbb{R}^{(3n \times 3n)}$ and $\mathbf{V} \in \mathbb{R}^{(3n \times 3n)}$ are defined as
+\begin{align}
+\mathbf{T} = I_3 \otimes \mathbf{T}_c, 
+\quad
+\mathbf{A}( \avb{u}_f ) = I_3 \otimes \mathbf{A}_c ( \avb{u}_f ), 
+\quad
+\mathbf{D} = I_3 \otimes \mathbf{D}_c,
+\quad
+\mathbf{V} = I_3 \otimes \mathbf{V_{c}}
+\end{align}
+where $I_3 \in \mathbb{R}^{(3 \times 3)}$ is the identity matrix and $\mathbf{V_{c}} \in \mathbb{R}^{(n \times n)}$ is a diagonal matrix with cell-centered control volumes. $\mathbf{T}_c \in \mathbb{R}^{(n \times n)}$ and $\mathbf{D}_c \in \mathbb{R}^{(n \times n)}$ are the collocated temporal and diffusion operators for a discrete scalar field respectively. The collocated, non-linear advection operator $\mathbf{A}_c( \avb{u}_f ) \in \mathbb{R}^{(n \times n)}$ depends on the face-normal velocity $\avb{u}_f$. Finally, $\mathbf{G}_c \in \mathbb{R}^{(3n \times n)}$ represents the collocated discrete gradient operator and $\mathbf{M} \in \mathbb{R}^{(n \times m)}$ denotes the face-to-cell discrete divergence operator.
+
+\subsection{(Skew-)symmetries of the collocated discretization operators}
+
+To derive the KE transport equation, let's take a dot product of the discrete momentum equation \eqref{eqn:discreteOperators} with transposed collocated velocity ${\avb{u}_c}^T$
+\begin{align}
+\transDot{\avb{u}_c}
+\left[ 
+ \mathbf{T}\avb{u}_c 
+ + \mathbf{A}( \avb{u}_f ) {\avb{u}_c} 
+ + \mathbf{V} \mathbf{G}_c \avb{p}_c
+ - \mathbf{D} {\avb{u}_c}
+\right] = \mathbf{0}^c.
+\label{eqn:KE1}
+\end{align}
+
+When Eq. \eqref{eqn:KE1} is added with its' transpose, we get 
+
+\begin{subequations}
+\begin{align}
+\begin{split}
+\transDot{\avb{u}_c}
+\left[ 
+ \mathbf{T}\avb{u}_c 
+ + \mathbf{A}( \avb{u}_f ) {\avb{u}_c} 
+ + \mathbf{V} \mathbf{G}_c \avb{p}_c
+ - \mathbf{D} {\avb{u}_c}
+\right] \, + & 
+\\
+\transDot{
+ \left[ 
+ \mathbf{T}\avb{u}_c 
+ + \mathbf{A}( \avb{u}_f ) {\avb{u}_c} 
+ + \mathbf{V} \mathbf{G}_c \avb{p}_c 
+ - \mathbf{D} {\avb{u}_c}
+ \right] 
+} & {\avb{u}_c} = \mathbf{0}^c,
+\end{split}
+\end{align}
+\begin{align}
+\begin{split}
+\left( 
+ \transDot{\avb{u}_c} \mathbf{T} \avb{u}_c + 
+ {\avb{u}_c}^T \transDot{\mathbf{T}} {\avb{u}_c}
+\right)
+ + \left(
+ \transDot{\avb{u}_c} \mathbf{A}(\avb{u}_f) {\avb{u}_c} + 
+ {\avb{u}_c}^T \transDot{\mathbf{A}(\avb{u}_f)} {\avb{u}_c}
+\right)
+\\
+ + \mathbf{V} \left(
+ \transDot{\avb{u}_c} \mathbf{G}_c \avb{p} +
+ \avb{p}^T \transDot{\mathbf{G}_c} {\avb{u}_c}
+\right)
+- \left(
+ \transDot{\avb{u}_c} \mathbf{D} {\avb{u}_c} +
+ {\avb{u}_c}^T \transDot{\mathbf{D}} {\avb{u}_c}
+\right)
+ = \mathbf{0}^c,
+\end{split}
+\end{align}
+\begin{align}
+\begin{split}
+\mathbf{T} {(\avb{u}_c)}^2 
+\\
++
+{\avb{u}_c}^T \cdot
+\left( 
+{\mathbf{A}(\mathbf{\avb{\avb{u}_f}})} + {\mathbf{A}(\avb{u}_f)}^T
+\right) \cdot
+{\avb{u}_c}
+\\
++
+\mathbf{V} \left(
+ \transDot{\avb{u}_c} \mathbf{G}_c \avb{p} +
+ \avb{p}^T \transDot{\mathbf{G}_c} {\avb{u}_c}
+\right) 
+\\
+-
+\transDot{\avb{u}_c}
+ \left( \mathbf{D} + {\mathbf{D}}^T \right)
+ \cdot {\avb{u}_c}
+= \mathbf{0}^c. 
+\end{split}
+\end{align}
+\label{eqn:operatorProperties}
+\end{subequations}
+
+To conserve kinetic energy (in absence of viscosity), contribution from the advection and pressure gradient terms must go to zero. The advection term becomes zero $ \left( {\mathbf{A}(\avb{u}_f)} + {\mathbf{A}(\avb{u}_f)}^T = 0 \right),$ when discrete operator $\mathbf{A}(\avb{u}_f)$ is \emph{skew symmetric}, i.e. 
+\begin{equation}
+{\mathbf{A}(\avb{u}_f)} = - {\mathbf{A}^T(\avb{u}_f)},
+\label{eqn:advOpConstraint}
+\end{equation}
+which can be achieved using a divergence free face-normal velocity field $\avb{u}_f$ and a \emph{mid-point} interpolation scheme in the $\shiftCS$ shift operator. For a mass conserving, solenoidal collocated velocity field (i.e. $\mathbf{M} \shiftCS \avb{u}_c = 0$ ), the pressure gradient contribution goes to zero, when
+\begin{align}
+\begin{split}
+\mathbf{V} {\mathbf{G}_c}^T \cdot &= - \mathbf{M} \shiftCS
+\\
+{\mathbf{G}_c} \cdot &= - \shiftCS^T \mathbf{V}^{-1} \mathbf{M}^T 
+\end{split}
+\label{eqn:gradOpConstraint}
+\end{align}
+constraint is satisfied. This signifies that both of the collocated divergence operator $\mathbf{M} \shiftCS$ and the collocated gradient operator $ {\mathbf{G}_c} $ shall be defined following the \emph{Gauss-Green divergence theorem} in conjunction the mid-point interpolation scheme, which ensures that only sign of the operator coefficients are changed under a transpose operation. 
+
+The shift operators is a collocated finite volume method are approximate i.e. $\shiftSC [(\shiftCS \mathbf{u}^c)\cdot \hat{n}]\hat{n} \approx \mathbf{u}^c$. Hence the divergence error of collocated velocity will be higher than the divergence error of face-normal velocity $\left(\mathbf{M} \shiftCS \mathbf{u}^c > \mathbf{M} \mathbf{u}^f \right)$. If the linear systems at each time step are satisfied with a tight residual tolerance, the error introduced by the pressure gradient term will be very small. Since, contribution form the advection and pressure gradient terms is practically zero, the KE conservation equation \eqref{eqn:operatorProperties} turns into 
+\begin{equation}
+\begin{split}
+\mathbf{T} {(\avb{u}_c)}^2 
+= \transDot{\avb{u}_c}
+ \left( \mathbf{D} + {\mathbf{D}}^T \right)
+ \cdot {\avb{u}_c}.
+\end{split}
+\end{equation}
+Finally, the summation of the diffusion operators $\left( \mathbf{D} + {\mathbf{D}}^T \right)$ need to be a \textbf{negative-definite} matrix to ensure kinetic energy is not increasing.
+
+
+\subsection{Staggered gradient operator}
+
+Recalling the collocated gradient operator constraint Eq. \eqref{eqn:gradOpConstraint}, we can define a cell-to-face staggered gradient operator $\mathbf{G}_f^T \in \mathbb{R}^{m \times n}$ such that 
+\begin{align}
+\begin{split}
+\mathbf{V} {\mathbf{G}_c}^T \shiftSC \cdot & = - \mathbf{M} \shiftCS \shiftSC 
+\\
+\mathbf{V}_f {\mathbf{G}_f}^T \cdot & \equiv - \mathbf{M},
+\\
+{\mathbf{G}_f} \cdot & \equiv -\mathbf{V}_f^{-1} \mathbf{M}^T,
+\end{split}
+\label{eqn:gradStaggOp}
+\end{align}
+where $\mathbf{V}_f \in \mathbb{R}^{m \times m} $ is a diagonal matrix with staggered control volumes. The difference between reconstructed staggered gradient operator $\shiftSC \mathbf{G}_f$ and equivalent collocated gradient operator $ \mathbf{G}_c $ results from the in-exact shift operators, which are elaborated in the section \eqref{sec:shiftOp}.
+
+
+
+
+\subsection{Shift operators}
+\label{sec:shiftOp}
+
+In the collocated finite volume method, fields are stored in cell-center of the control volumes. However, interpolated value at the face center is necessary to apply the discrete spatial operators (e.g. divergence, gradient) derived from the Gauss theorem. Thus a linear interpolation operator $\shiftCS \in \mathbb{R}^{m \times 3n} $ is introduced to transform a collocated vector field into a staggered scalar field. In addition, mass conservation in an incompressible flow is indirectly enforced by solving a Poisson pressure correction equation for the staggered velocity field (see Eq. \eqref{eqn:poissonPressure}). To correct the collocated velocity a reconstruction operator $\shiftSC \in \mathbb{R}^{3n \times m} $ is also introduced. Together the operators are known as shift operators and ideally their contraction shall be an identity matrix (Eq. \eqref{eqn:shiftSC}). However, the relationship holds approximately
+\begin{equation}
+\shiftSC^{(3n \times m)} \shiftCS^{(m \times 3n)} \approx \mathbf{I}^{(3n \times 3n)},
+\label{eqn:shiftOperators}
+\end{equation}
+because of the stencil difference between the shift operators. The interpolation operator $\shiftCS$ involves only two straddling cell-center values (stencil size: 2). In contrast, the reconstruction operator $\shiftSC$ includes all faces: hence the cell and all of its' neighbors (stencil size: 1 + number-of-faces).
+
+In addition to the stencil difference, difference in control volumes and non-orthogonal gradient correction also contributes to the in-exactness of the shift operators. Using the reconstruction operator $\shiftSC$, let's define the relation between the collocated gradient and staggered gradient operators as
+\begin{equation}
+\shiftSC {\mathbf{G}_f} = {\mathbf{G}_c}.
+\label{eqn:gradRelation}
+\end{equation}
+
+Substituting the gradient operator expression from Eqs. \eqref{eqn:gradOpConstraint} and \eqref{eqn:gradStaggOp} in the Eq. \eqref{eqn:gradRelation}, we get a constraint
+\begin{align}
+\begin{split}
+- \shiftSC \mathbf{V_f}^{-1} \mathbf{M}^T &= - \shiftCS^T \mathbf{V}^{-1} \mathbf{M}^T,
+\\
+\shiftSC &= {\mathbf{V}_f} \shiftCS^T \mathbf{V}^{-1},
+\end{split}
+\label{eqn:shiftOpConstraint}
+\end{align}
+required to ensure the pressure gradient term contribution to KE transport vanishes. Let's examine the constraint for three different mesh types
+
+\begin{itemize}
+
+\item \textit{Cartesian uniform mesh:} The collocated and staggered cell volumes are equal. The constraint becomes $ \shiftSC = \shiftCS^T $, which is not exactly satisfied due to the stencil difference mentioned earlier.
+
+\item \textit{Cartesian non-uniform mesh:} The collocated and staggered cell volumes are not equal, which increases non-zero contribution to KE transport.
+
+\item \textit{Non-orthogonal mesh:} The face-normal gradient for any variable $\phi$ in a non-orthogonal face (with non-orthogonal angle $ \theta$)(Fig. ) defined as 
+\begin{align}
+\begin{split}
+{\mathbf{G}_f}(\phi_f) {S}_f &= 
+\underbrace{ 
+ \frac{(\phi_F -\phi_C)}{d_{CF}} {E}_f
+}_{orthogonal \, like \, contribution}
++ \underbrace{ 
+ {\mathbf{G}_c}\frac{(\phi_F +\phi_C)}{2} \cdot \mathbf{T}_f
+}_{non\-orth. \, like \, contribution},
+\\
+\mathbf{S}_f &= \mathbf{E}_f + \mathbf{T}_f,
+\end{split}
+\label{eqn:nonOrthCorr}
+\end{align}
+
+where $\mathbf{d_{CF}} = d_{CF}{\hat{e}}$ is the vector connecting the cell-centers. The face-area vector $\mathbf{S}_f = S_f \hat{n}$ is split into two components: $\mathbf{E}_f = E_f \hat{e}$ is the vector along the line connecting two straddling cell-centers and $\mathbf{T}_f = T_f \hat{t}= (\mathbf{S}_f - \mathbf{E}_f)$ is the difference vector. Three common methods are available in the literature (see Moukalled et al. \cite[chapter 8.6]{moukalled2015}) to calculate the $\mathbf{E}_f$ vector and corresponding $\mathbf{T}_f$ vector:
+\begin{subequations}
+\begin{align}
+\begin{split}
+\text{Minimum correction:}&
+\\
+& \mathbf{E}_f = (S_f \cos\theta) \hat{e} = ( \hat{e} \cdot \mathbf{S}_f )\hat{e},
+\\
+& \mathbf{T}_f = (\hat{n} - \cos \theta \hat{e}) S_f.
+\label{eqn:nonOrth-minCorr}
+\end{split} 
+\\
+\begin{split}
+\text{Orthogonal correction:} &
+\\ 
+& \mathbf{E}_f = S_f \hat{e},
+\\
+& \mathbf{T}_f = (\hat{n} - \hat{e}) S_f.
+\label{eqn:nonOrth-orthCorr}
+\end{split}
+\\
+\begin{split}
+\text{Over-relaxed approach:} & 
+\\
+& \mathbf{E}_f = \frac{ S_f}{\cos\theta} \hat{e} = \frac{\mathbf{S}_f \cdot \mathbf{S}_f}{\hat{e} \cdot \mathbf{S}_f} \hat{e} ,
+\\
+& \mathbf{T}_f = (\hat{n} - \frac{\hat{e}}{\cos \theta} ) S_f.
+\label{eqn:nonOrth-overRelaxCorr}
+\end{split}
+\end{align}
+\label{eqn:nonOrthTypes}
+\end{subequations}
+
+The non-orthogonal correction is calculated using the collocated gradient ${\mathbf{G}_c}$ (with much wider stencil) which can also add non-zero KE contribution. Trias et al. \cite{trias2014} discarded the non-orthogonal correction to minimize the KE contribution, however the authors found that without a correction for non-orthogonality the face-normal gradient become inaccurate and eventually make the solver unstable.
+\end{itemize}
+
+
+
+\subsection{Diffusion operator}
+
+The Laplace operator $ \mathbf{L} \in \mathbb{R}^{n \times n}$ can be defined as a product of the collocated divergence and staggered gradient operators
+\begin{align}
+\begin{split}
+\mathbf{L} & = \mathbf{M} \mathbf{G}_f ,
+\\
+& \equiv - \mathbf{M} \mathbf{V}_f^{-1} \mathbf{M}^T ,
+\end{split}
+\label{eqn:LaplaceOp}
+\end{align}
+which is by construction a symmetric, negative-definite matrix. The discrete diffusion operator $\mathbf{D}$ retain this property, since the transposed, deviatoric face-normal gradient is much smaller compared to the face-normal gradient
+\begin{align}
+\begin{split}
+\sumFV \left(\ddx {\av{u}_j^f}{i} - 2 \ddx {\av{u_k}^f}{k} \delta_{ij} 
+ \right) \areaVec{j} 
+\ll 
+\sumFV \left( \ddx {\av{u}_i^f}{j} \right) \areaVec{j},
+\\
+\mathbf{D} \avb{u^c} = \mathbf{M}\left[ \nueffb \left( \mathbf{G}_f + \mathbf{G}_f^T - 2\mathbf{M}\,\mathbf{I} \right)\avb{u^c} \right] .
+\end{split} 
+\end{align}
+
+

@@ -1,0 +1,15 @@
+rootDir=/home/rroy/OpenFOAM/rroy-6/run/
+
+meshDirs= [3DTGV/Re5000/newTest/,	3DTGV/Re5000/newTest/,	]
+
+turbModels= [dynKEqnHeinz,	dynKEqnHeinz,	dynKEqnHeinz,	dynKEqnHeinz,	]
+
+solvers= [pisoFoamMod,	spaeceFoamCNTGV,	]
+
+caseNames= [polyLaplace,	A6Del1.5RC,	]
+
+meshs= [129x129x129,	129x129x129,	]
+
+caseLabels = [PISO,	SPAeCE-A6RC,	]
+
+plotSaveLoc=/home/rroy/OpenFOAM/rroy-6/run//3DTGV/Re5000/newTest//dynKEqnHeinz/pisoFoamMod/plots/pisoVsSpaece/129x129x129/

@@ -27,9 +27,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{uwyo_thesis} % the main style file
 %%% Many common packages are already loaded by the style file
-%%% Add any others below
-%\usepackage{??}
 
+\input{customAdditions}
 
 %%% Note about your title:
 %%% Due to limitations in the UW Banner system, you may want to limit your
@@ -83,8 +82,8 @@
 \thesisCommitteeChair{Michael Stoellinger}  % this is your advisor
 \thesisFirstMember{Long Lee}  % this should be the member *outside* your department
 \thesisSecondMember{Erica L. Belmont}
-\thesisThirdMember{Jonathan W. Naughton}
-\thesisFourthMember{Dimitri Mavriplis}
+\thesisThirdMember{Dimitri Mavriplis}
+\thesisFourthMember{Jonathan W. Naughton}
 % \thesisFifthMember{}
 % \thesisSixthMember{}
 % \thesisExternalMember{Carol Danvers}  % a member from another university, not normally used
@@ -127,33 +126,6 @@ non-textual content will be removed) by ProQuest for the online databases, altho
 full abstract will be preserved in the electronic (PDF) version of your dissertation. In
 any case, the dissertation abstract cannot exceed two pages (one page is preferred).
 
-New paragraph. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance.
-
-New paragraph. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance.
-
-New paragraph. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance. This line is meant to check the margins and text
-appearance.
-
 
 
 \end{thesisabstract}
@@ -161,14 +133,14 @@ appearance.
  \thesistitlepage        % print title page
  \thesiscopyrightpage    % print the copyright page
  % comment out line below to eliminate the optional dedication page, if you really can't think of anyone!
- \thesisdedicationpage   % print the dedication page
+ %\thesisdedicationpage   % print the dedication page
 
 % Generate and print the lists
- \tableofcontents        % table of contents
- \listoffigures          % List of Figures
- \listoftables           % List of Tables
+ %\tableofcontents        % table of contents
+ %\listoffigures          % List of Figures
+ %\listoftables           % List of Tables
  % comment out line below if you have no program listings!!!
- \mylistoflistings      % List of program listings
+ %\mylistoflistings      % List of program listings
 
 
 %% acknowledgments section: don't forget to thank your committee
@@ -198,11 +170,15 @@ margins and text appearance. This line is meant to check the margins and text ap
 
 %% Abbreviations is an optional entry, placed either at the front or at the end of the document
 %% Uncomment the line below if you want abbreviations to be part of the front matter, before Chapter 1
-\input{uwyo_abbr_front} % 
+%\input{uwyo_abbr_front} % 
 
 % Bring in the chapter files -- \input is more efficient than \include
-\input{chap1_intro} % chapter 1
-\input{chap2_algorithm} % chapter 2
+\input{chap1_intro} % chapter 1: introduction
+\input{chap2_theory} % chapter 2: Theory on LES, sug-filter-scale turbulence models
+\input{chap3_solverDev} % chapter 3: SPAeCE solver development
+\input{chap4_solverResults.tex}
+\input{chap5_BolundHill.tex}
+%\input{chap6_conclusion.tex}
 % add other chapters here
 
 
@@ -210,8 +186,8 @@ margins and text appearance. This line is meant to check the margins and text ap
 % comment this out if you have no appendices
 
 \appendix
-\input{uwyo_A} % appendix A
-\input{uwyo_B} % appendix B
+%\input{uwyo_A} % appendix A
+%\input{uwyo_B} % appendix B
 
 %% Uncomment the line below if you want abbreviations to be an appendix, at the end of the document
 %\input{uwyo_C_abbr} % appendix C
@@ -219,12 +195,17 @@ margins and text appearance. This line is meant to check the margins and text ap
 
 % Generate the References section using BibTeX. Optionally you
 % can code this by hand (argh!)
-\bibliographystyle{ieeetran} % IEEE standard citation style
+%\bibliographystyle{ieeetran} % IEEE standard citation style
+\bibliographystyle{IEEEtran}
 \addcontentsline{toc}{chapter}{\bibname} % make reference section show up in TOC
 
-\begin{spacing}{1.0} % sets line spacing of references
+
 % reads in the sample BibTex file supplied; change to your bib file name
-\bibliography{sample}
+%The correct way to load multiple bib files is to use
+%\bibliography{file1,file2} Note the lack of space between the comma and the files!
+
+\begin{spacing}{1.0} % sets line spacing of references
+\bibliography{spaecePaper,BolundHill}
 \end{spacing}
 
 

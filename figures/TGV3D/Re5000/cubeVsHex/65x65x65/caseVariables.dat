@@ -1,0 +1,15 @@
+rootDir=/home/rroy/OpenFOAM/rroy-6/run/
+
+meshDirs= [3DTGV/Re5000/newTest/,	3DTGV/Re5000/newNonUniform/,	]
+
+turbModels= [dynKEqnHeinz,	dynKEqnHeinz,	dynKEqnHeinz,	dynKEqnHeinz,	]
+
+solvers= [spaeceFoamCNTGV,	spaeceFoamCNTGV,	]
+
+caseNames= [advectionExplicit,	advectionExplicit,	]
+
+meshs= [65x65x65,	65x65x65,	]
+
+caseLabels = [Cube,	Hexagon,	]
+
+plotSaveLoc=/home/rroy/OpenFOAM/rroy-6/run//3DTGV/Re5000/newTest//dynKEqnHeinz/spaeceFoamCNTGV/plots/cubeVsHex/65x65x65/

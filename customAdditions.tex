@@ -1,0 +1,100 @@
+% This file contains all custom packages, commands, paths used in the dissertation%
+
+
+
+%%rroy package addition
+% used for subfloat option in figures
+%\usepackage{subfig} % inculded in style file
+% used for split command in equations
+\usepackage{mathtools} 
+% used in the textapprox command
+\usepackage{textcomp} 
+\usepackage{amssymb}
+\usepackage{cancel} %% for \cancelto command
+\usepackage{bm} %% \boldsymbol command
+%\usepackage{float} %% for H figure placement specifier % inculded in style file
+%\epstopdfsetup{update} % only regenerate pdf files when eps file is newer
+
+
+
+%
+%\newcommand{\name}[num][default]{definition}
+\newcommand{\spaece}{\texttt{SPAeCE}\,\,}
+\newcommand{\spaeceRC}{\texttt{SPAeCE-RC}\,\,}
+\newcommand{\spaeceA}{\texttt{SPAeCE-A6}\,\,}
+\newcommand{\spaeceARC}{\texttt{SPAeCE-A6RC}\,\,}
+\newcommand{\spaeceAdivFree}{\texttt{SPAeCE-A6-divFree}\,\,}
+
+\newcommand{\piso}{\texttt{PISO}\,\,}
+
+\newcommand{\faceUnitNormal}{\mathbf{\hat{n}}}
+\newcommand{\av}[1]{\overline{#1}}
+\newcommand{\avb}[1]{\overline{\mathbf{#1}}}
+
+\newcommand{\avtilde}[1]{\widetilde{\overline{#1}}}
+\newcommand{\avprime}[1]{{\overline{#1}}^{\prime}}
+
+\newcommand{\avbTilde}[1]{\widetilde{\avb{#1}}}
+\newcommand{\avbPrime}[1]{{\overline{\mathbf{#1}}}^{\prime}}
+
+\newcommand{\avU}[1]{\av{U}_{#1}}
+\newcommand{\avu}[1]{\av{u}_{#1}}
+\newcommand{\rst}[2]{\av{u_{#1}u_{#2}}}
+
+\newcommand{\dd}[2]{\frac{\partial {#1}}{\partial {#2}}}
+
+\newcommand{\ddt}[1] {\frac{\partial {#1}}{\partial t}}
+\newcommand{\Ddt}[1] {\frac{\Delta {#1}}{\Delta t}}
+
+\newcommand{\dx}[1]{\frac{\partial}{\partial x_{#1}}}
+\newcommand{\ddx}[2]{\frac{\partial #1}{\partial x_{#2}}}
+\newcommand{\ddxx}[3]{\frac{\partial^2 #1}{\partial x_{#2} \partial x_{#3}}}
+\newcommand{\ddxj} {\frac{\partial}{\partial x_j}}
+
+\newcommand{\eps}{\varepsilon}
+
+\newcommand{\avT}[1]{\langle {#1} \rangle}
+\newcommand{\RANSstress}[2]{\avT{{#1}^{\prime} {#2}^{\prime}}}
+
+\newcommand{\half}{\frac{1}{2}}
+
+\newcommand{\divergence}[1] { \nabla \cdot {#1}}
+\newcommand{\grad}[1] {\nabla {#1}}
+\newcommand{\curl}[1] {\nabla \times {#1}}
+\newcommand{\laplacian}[1] {\Delta {#1}}
+\newcommand{\nueffb}{\boldsymbol{\nu}_{eff}}
+
+%\newcommand{\areaVec}{\mathbf{S}^f}
+\newcommand{\areaVec}[1]{{S}_{#1}^f}
+\newcommand{\magArea}{|\areaVec{}|}
+
+\newcommand{\transDot}[1]{{#1}^T \cdot}
+\newcommand{\shiftCS}{\, \mathbf{\Gamma}_{c \rightarrow f}}
+\newcommand{\shiftSC}{\, \mathbf{\Gamma}_{f \rightarrow c}}
+
+
+\newcommand{\textapprox}{\raisebox{0.5ex}{\texttildelow}}
+\newcommand{\sumFV}{\sum_{f \textapprox faces(V_c)}}
+
+%\newcommand{\inverse[1]}{#1\raisebox{1.15ex}{$\scriptscriptstyle-\!1$}}
+\newcommand{\inverse[1]}{#1^{-1}}
+
+\newcommand{\cubicRoot}[1]{\sqrt[\leftroot{-2}\uproot{2}{3}]{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\imgHalfWidth}{0.475}
+\newcommand{\imgOneThirdWidth}{0.31}
+\newcommand{\imgFortySeven}{0.44462} % 46.8%
+\newcommand{\imgFiftyThree}{0.50538} % 53.2%
+
+%%%% From Bolund paper %%%%%
+
+\newcommand{\Ua}[1]{\av{U}_{#1}}
+\newcommand{\SGSstress}[2]{\avT{{#1}^{\prime} {#2}^{\prime}}}
+
+
+
+\graphicspath{
+{figures/}
+{figures/BolundHill/}
+}

@@ -1,0 +1,15 @@
+rootDir=/home/rroy/OpenFOAM/rroy-6/run/
+
+meshDirs= [3DTGV/Re5000/newTest/,	3DTGV/Re5000/newTest/,	]
+
+turbModels= [dynKEqnHeinz,	dynKEqnHeinz,	dynKEqnHeinz,	dynKEqnHeinz,	]
+
+solvers= [spaeceFoamCNTGV,	spaeceFoamCNTGV,	]
+
+caseNames= [advectionExplicit,	A6Del1.5,	]
+
+meshs= [65x65x65,	65x65x65,	]
+
+caseLabels = [SPAeCE,	SPAeCE-A6,	]
+
+plotSaveLoc=/home/rroy/OpenFOAM/rroy-6/run//3DTGV/Re5000/newTest//dynKEqnHeinz/spaeceFoamCNTGV/plots/spaeceVsSpaeceA6/65x65x65/

@@ -1,0 +1,13 @@
+rootDir=/home/rroy/OpenFOAM/rroy-6/run/
+
+meshDirs= [2DTGV_Cartesian/,	2DTGV_rightAnglePrism/,	]
+
+solvers= [spaeceFoamCNTGV/regular/,	spaeceFoamCNTGV/regular/,	]
+
+caseNames= [CFL0.40,	CFL0.40,	]
+
+meshs= [65x65_KE,	64x64_Uns_KE,	]
+
+caseLabels = [Cartesian square,	right-angle triangle,	]
+
+plotSaveLoc=/home/rroy/OpenFOAM/rroy-6/run//2DTGV_Cartesian//inviscid/spaeceFoamCNTGV/regular//plots/65x65_KE/KEComp/

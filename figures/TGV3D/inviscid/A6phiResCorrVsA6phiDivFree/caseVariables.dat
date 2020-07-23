@@ -1,0 +1,15 @@
+rootDir=/home/rroy/OpenFOAM/rroy-6/run/
+
+meshDirs= [3DTGV/inviscid/,	3DTGV/inviscid/,	3DTGV/inviscid/,	]
+
+turbModels= [inviscid/,	inviscid/,	inviscid/,	]
+
+solvers= [spaeceFoamCNTGV,	spaeceFoamCNTGV,	spaeceFoamCNTGV,	]
+
+caseNames= [,	A6,	A6_divFree,	]
+
+meshs= [65x65x65,	65x65x65_phiResCorr,	65x65x65_phi,	]
+
+caseLabels = [SPAeCE,	A6,	A6-divFree,	]
+
+plotSaveLoc=/home/rroy/OpenFOAM/rroy-6/run//3DTGV/inviscid//spaeceFoamCNTGV/plots/A6phiResCorrVsA6phiDivFree/
